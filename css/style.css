@@ -1,20 +1,26 @@
 #map { 
-	width: 40%;
-	height: 500px;
+	width: 45%;
+	height: 600px;
 	margin: auto;
 	border: 20px gray solid;
 }
 
 #details {
-	/*width: 50%;
-	height: 400px;*/
+	width: 45%;
+	height: 600px;
 }
 
 header {
 	background-color: black;
 	color: white;
-	padding: 150px 350px;
+	padding: 25px 50px;
 	margin-bottom: 15px;
+}
+
+#titre {
+	font-family: Tahoma;
+	font-size: 40px;
+	text-align: center;
 }
 
 body {
@@ -25,11 +31,11 @@ body {
 footer {
 	background-color: white;
 	color: darkgray;
-	padding: 75px 350px;
+	padding: 25px 50px;
 	margin-top: 15px;
 }
 
 .container {
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 }
