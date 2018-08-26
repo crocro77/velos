@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Velo'v</title>
+    <meta charset="utf-8">
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="../css/style.css">
+  </head>
+
+  <header>
+    <h1 id="titre">Velo'V - Réservation de vélos de location à Lyon</h1>
+    <div id="slider">Diaporama : La page d’accueil de l’application affichera un diaporama de photos et de textes expliquant le fonctionnement de l'application. Ce diaporama réagit également au clavier avec les touches gauche et droite pour reculer et avancer manuellement.</div>
+  </header>
+
+  <body>
+    <div class="container">
+      <div id="map"></div>
+
+      <div id="details">Réservation d'un vélo : Il doit être possible de réserver un vélo disponible à la station sélectionnée en signant dans un champ libre implémenté à l’aide de l’API HTML5 Canvas. Une fois la signature validée, un vélo est marqué comme réservé à cette station.</div>
+
+    </div>
+
+    <footer>
+      <div id="reservations">Les données de réservation seront stockées dans le navigateur à l’aide de l’API HTML5 Web Storage et affichées dans un pied de page en­-dessous du panneau. La réservation expire automatiquement au bout de 20 minutes et également lorsque le navigateur web se referme. Le pied de page affiche en permanence l’état de la réservation (s’il y en a une), avec un décompte dynamique du temps restant avant expiration de la réservation. Il ne peut y avoir qu'une réservation à la fois. Si une nouvelle réservation a lieu, elle remplace la précédente.</div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
+    <script src="../js/map.js"></script>
+    <script src="../js/decaux.js"></script>
+
+  </body>
+</html>

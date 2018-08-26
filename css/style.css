@@ -1,0 +1,35 @@
+#map { 
+	width: 40%;
+	height: 500px;
+	margin: auto;
+	border: 20px gray solid;
+}
+
+#details {
+	/*width: 50%;
+	height: 400px;*/
+}
+
+header {
+	background-color: black;
+	color: white;
+	padding: 150px 350px;
+	margin-bottom: 15px;
+}
+
+body {
+	background-color: lightblue;
+	padding: 15px;
+}
+
+footer {
+	background-color: white;
+	color: darkgray;
+	padding: 75px 350px;
+	margin-top: 15px;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+}
