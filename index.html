@@ -52,8 +52,11 @@
       <div id="map"></div>
 
       <div id="details"><!--Réservation d'un vélo : Il doit être possible de réserver un vélo disponible à la station sélectionnée en signant dans un champ libre implémenté à l’aide de l’API HTML5 Canvas. Une fois la signature validée, un vélo est marqué comme réservé à cette station.-->
-        <h2>Cliquez sur une station pour la voir en détails</h2>
-        <div id="stations"></div>
+        <h2 id="instruction">Cliquez sur une station pour la voir en détails</h2>
+        <div id="stations">
+            <div id="address"></div>
+            <button id="bookBtn">Book</button>
+        </div>
         <canvas id="canvas" width="300" height="300">
           <p>Veuillez signer pour réserver</p>
           <button>Valider</button>
@@ -71,6 +74,7 @@
     <script src="js/slider.js"></script>
     <!--<script src="js/map.js"></script>-->
     <script src="js/decaux.js"></script>
+    <script src="js/popup.js"></script>
 
   </body>
 </html>

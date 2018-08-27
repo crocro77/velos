@@ -134,3 +134,11 @@ footer {
   from {opacity: .4} 
   to {opacity: 1}
 }
+
+#bookBtn {
+	display: none;
+}
+
+#bookBtn.open {
+	display: block;
+}
