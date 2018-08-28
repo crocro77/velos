@@ -54,7 +54,7 @@
 		        closeOnClick: true
 		    })
 	     	.setLngLat([longitude, latitude])
-		  	.setHTML("<p>" + stationName + "</p>")
+		  	.setHTML("<p>" + stationName.toLowerCase() + "</p>")
 		  	.addTo(map);
 
 
@@ -62,7 +62,7 @@
 	  	    // create a DOM element for the marker
 		    var el = document.createElement('div');
 		    el.className = 'marker';
-		    el.style.backgroundImage = 'url(https://image.freepik.com/icones-gratuites/velo-d-39-un-gymnaste_318-46870.jpg)';
+		    el.style.backgroundImage = 'url(img/red_marker_bike.jpg)';
 		    el.style.width ='20px';
 		    el.style.height = '20px';
 
@@ -87,36 +87,8 @@
 
 		}
 
-	  
+		function openCanvas() {
+			window.open("canvas.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		}
 
-	  		var canvas = document.querySelector("canvas");
-
-			var signaturePad = new SignaturePad(canvas);
-
-			// Returns signature image as data URL (see https://mdn.io/todataurl for the list of possible parameters)
-			signaturePad.toDataURL(); // save image as PNG
-			signaturePad.toDataURL("image/jpeg"); // save image as JPEG
-			signaturePad.toDataURL("image/svg+xml"); // save image as SVG
-
-			// Draws signature image from data URL.
-			// NOTE: This method does not populate internal data structure that represents drawn signature. Thus, after using #fromDataURL, #toData won't work properly.
-			signaturePad.fromDataURL("data:image/png;base64,iVBORw0K...");
-
-			// Returns signature image as an array of point groups
-			const data = signaturePad.toData();
-
-			// Draws signature image from an array of point groups
-			signaturePad.fromData(data);
-
-			// Clears the canvas
-			signaturePad.clear();
-
-			// Returns true if canvas is empty, otherwise returns false
-			signaturePad.isEmpty();
-
-			// Unbinds all event handlers
-			signaturePad.off();
-
-			// Rebinds all event handlers
-			signaturePad.on();
-				});
+});

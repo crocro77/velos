@@ -141,12 +141,11 @@ footer {
 	background-color: black;
 	border-radius: 25px;
 	padding: 10px 100px;
-	margin-top: 30px;
-	width: 100%;
 	font-family: Tahoma;
 	font-size: 40px;
 	font-weight: bold;
-	align-items: center;
+	text-align: center;
+	text-decoration: none;
 }
 
 #bookBtn:hover {
