@@ -139,9 +139,10 @@ footer {
 	display: none;
 	color: white;
 	background-color: black;
-	border-radius: 3px;
+	border-radius: 25px;
 	padding: 10px 100px;
 	margin-top: 30px;
+	width: 100%;
 	font-family: Tahoma;
 	font-size: 40px;
 	font-weight: bold;
@@ -161,7 +162,11 @@ footer {
 #instruction, #name, #address, #status, #bike_stands, #available_bikes, #available_bike_stands {
 	font-family: Tahoma;
 	font-size: 20px;
-	margin-top: 50px;
+	margin-top: 25px;
 	text-align: center;
 	text-shadow: 1px 1px gray;
+}
+
+#logo_velov {
+	align-items: center;
 }
