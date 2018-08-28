@@ -68,7 +68,12 @@
 
 		    el.addEventListener('click', function() {
 
-		        $('#address').html(data[index].address);
+		        $('#name').html("Nom de la Station : " + data[index].name);
+		        $('#address').html("Adresse de la Station : " + data[index].address);
+		        $('#status').html("Statut de la Station : " + data[index].status);
+		        $('#bike_stands').html("Nombre de bornes : " + data[index].bike_stands);
+		        $('#available_bikes').html("Nombre de vélos disponibles : " + data[index].available_bikes);
+		        $('#available_bike_stands').html("Nombre de bornes libres : " + data[index].available_bike_stands);
 		        $('#bookBtn').show();
 		        $('#instruction').hide();
 		    });

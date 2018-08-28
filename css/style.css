@@ -137,8 +137,31 @@ footer {
 
 #bookBtn {
 	display: none;
+	color: white;
+	background-color: black;
+	border-radius: 3px;
+	padding: 10px 100px;
+	margin-top: 30px;
+	font-family: Tahoma;
+	font-size: 40px;
+	font-weight: bold;
+	align-items: center;
+}
+
+#bookBtn:hover {
+	color: black;
+	background-color: lightgray;
+	cursor: pointer;
 }
 
 #bookBtn.open {
 	display: block;
+}
+
+#instruction, #name, #address, #status, #bike_stands, #available_bikes, #available_bike_stands {
+	font-family: Tahoma;
+	font-size: 20px;
+	margin-top: 50px;
+	text-align: center;
+	text-shadow: 1px 1px gray;
 }
