@@ -135,8 +135,8 @@ footer {
   to {opacity: 1}
 }
 
-#bookBtn {
-	display: none;
+.bookBtn {
+	display: block;
 	color: white;
 	background-color: black;
 	border-radius: 25px;
@@ -146,16 +146,13 @@ footer {
 	font-weight: bold;
 	text-align: center;
 	text-decoration: none;
+	margin: 20px auto;
 }
 
-#bookBtn:hover {
+.bookBtn:hover {
 	color: black;
 	background-color: lightgray;
 	cursor: pointer;
-}
-
-#bookBtn.open {
-	display: block;
 }
 
 #instruction, #name, #address, #status, #bike_stands, #available_bikes, #available_bike_stands {
@@ -166,6 +163,12 @@ footer {
 	text-shadow: 1px 1px gray;
 }
 
-#logo_velov {
-	align-items: center;
+.logo_velov {
+	display: block;
+	margin: 0 auto;
 }
+
+.stationName {
+	text-transform: capitalize;
+}
+

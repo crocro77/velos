@@ -1,41 +1,69 @@
-var canvas = document.querySelector("canvas");
+$(document).ready(function () {
 
-			var signaturePad = new SignaturePad(canvas);
+  var context = document.getElementById('canvas').getContext("2d");
 
-			var context = canvas.getContext("2d");           //context element
-			var clickX = new Array();
-			var clickY = new Array();
-			var clickDrag = new Array();
-			var paint;
-                
-			canvas.addEventListener("mousedown", mouseDown, false);
-			canvas.addEventListener("mousemove", mouseXY, false);
-			document.body.addEventListener("mouseup", mouseUp, false);
+  $('#canvas').mousedown(function (e) {
+    var mouseX = e.pageX - this.offsetLeft;
+    var mouseY = e.pageY - this.offsetTop;
 
-			// Returns signature image as data URL (see https://mdn.io/todataurl for the list of possible parameters)
-			signaturePad.toDataURL(); // save image as PNG
-			signaturePad.toDataURL("image/jpeg"); // save image as JPEG
-			signaturePad.toDataURL("image/svg+xml"); // save image as SVG
+    paint = true;
+    addClick(mouseX, mouseY);
+    redraw();
+  });
 
-			// Draws signature image from data URL.
-			// NOTE: This method does not populate internal data structure that represents drawn signature. Thus, after using #fromDataURL, #toData won't work properly.
-			signaturePad.fromDataURL("data:image/png;base64,iVBORw0K...");
+  $('#canvas').mousemove(function (e) {
+    if (paint) {
+      addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+      redraw();
+    }
+  });
 
-			// Returns signature image as an array of point groups
-			const data = signaturePad.toData();
+  $('#canvas').mouseup(function (e) {
+    paint = false;
+  });
 
-			// Draws signature image from an array of point groups
-			signaturePad.fromData(data);
+  $('#canvas').mouseleave(function (e) {
+    paint = false;
+  });
 
-			// Clears the canvas
-			signaturePad.clear();
+  var clickX = new Array();
+  var clickY = new Array();
+  var clickDrag = new Array();
+  var paint;
 
-			// Returns true if canvas is empty, otherwise returns false
-			signaturePad.isEmpty();
+  function addClick(x, y, dragging) {
+    clickX.push(x);
+    clickY.push(y);
+    clickDrag.push(dragging);
+  }
 
-			// Unbinds all event handlers
-			signaturePad.off();
+  function redraw() {
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+    console.log(context.canvas.width)
+    context.strokeStyle = "#000";
+    context.lineJoin = "round";
+    context.lineWidth = 5;
 
-			// Rebinds all event handlers
-			signaturePad.on();
-				});
+    for (var i = 0; i < clickX.length; i++) {
+      context.beginPath();
+      if (clickDrag[i] && i) {
+        context.moveTo(clickX[i - 1], clickY[i - 1]);
+      } else {
+        context.moveTo(clickX[i] - 1, clickY[i]);
+      }
+      context.lineTo(clickX[i], clickY[i]);
+      context.closePath();
+      context.stroke();
+    }
+  }
+
+  $("#clearCanvasBtn").click(function() {
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+    clickX = new Array();
+    clickY = new Array();
+    clickDrag = new Array();
+  });
+
+
+
+});

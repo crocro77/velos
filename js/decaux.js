@@ -10,10 +10,8 @@
 			let map;
 			loadMap();
 			getStationData();
-			$('#bookBtn').hide();
-
-
-
+			$('#stationDetails').hide();
+			attachClickEventToCanvas();
 		}
 
 		function loadMap() {
@@ -40,6 +38,7 @@
 			$.get( apiUrl, function( data ) {
 
 				for(i = 0; i < data.length; i++) {
+					data[i].name = data[i].name.split(/-(.+)/)[1];
 					setMarker(data[i].position.lat, data[i].position.lng, data[i].name, i, data);
 				}
 			});
@@ -54,7 +53,7 @@
 		        closeOnClick: true
 		    })
 	     	.setLngLat([longitude, latitude])
-		  	.setHTML("<p>" + stationName.toLowerCase() + "</p>")
+		  	.setHTML("<p class='stationName'>" + stationName.toLowerCase() + "</p>")
 		  	.addTo(map);
 
 
@@ -62,19 +61,21 @@
 	  	    // create a DOM element for the marker
 		    var el = document.createElement('div');
 		    el.className = 'marker';
-		    el.style.backgroundImage = 'url(img/red_marker_bike.jpg)';
-		    el.style.width ='20px';
-		    el.style.height = '20px';
+		    el.style.backgroundImage = 'url(img/blue_marker_bike.png)';
+			el.style.backgroundSize = '20px auto';
+			el.style.backgroundRepeat = 'no-repeat';
+		    el.style.width ='30px';
+		    el.style.height = '30px';
 
 		    el.addEventListener('click', function() {
 
-		        $('#name').html("Nom de la Station : " + data[index].name.toLowerCase());
+		        $('#name').html("Nom de la Station : " + data[index].name);
 		        $('#address').html("Adresse de la Station : " + data[index].address);
 		        $('#status').html("Statut de la Station : " + data[index].status);
 		        $('#bike_stands').html("Nombre de bornes : " + data[index].bike_stands);
 		        $('#available_bikes').html("Nombre de vélos disponibles : " + data[index].available_bikes);
 		        $('#available_bike_stands').html("Nombre de bornes libres : " + data[index].available_bike_stands);
-		        $('#bookBtn').show();
+		        $('#stationDetails').show();
 		        $('#instruction').hide();
 		    });
 	
@@ -87,8 +88,11 @@
 
 		}
 
-		function openCanvas() {
-			window.open("canvas.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+		
+		function attachClickEventToCanvas() {
+			$('.bookBtn').click(function() {
+				window.open("canvas.html", "_blank", "toolbar=no,scrollbars=no,resizable=no,top=500,left=500,width=500,height=500");
+			});
 		}
-
 });
+
