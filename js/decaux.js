@@ -12,6 +12,8 @@
 			getStationData();
 			$('#stationDetails').hide();
 			attachClickEventToCanvas();
+			attachClickEventToSubmit();
+			let booked;
 		}
 
 		function loadMap() {
@@ -61,7 +63,7 @@
 	  	    // create a DOM element for the marker
 		    var el = document.createElement('div');
 		    el.className = 'marker';
-		    el.style.backgroundImage = 'url(img/blue_marker_bike.png)';
+		    el.style.backgroundImage = 'url(img/red_marker_bike.png)';
 			el.style.backgroundSize = '20px auto';
 			el.style.backgroundRepeat = 'no-repeat';
 		    el.style.width ='30px';
@@ -94,5 +96,15 @@
 				window.open("canvas.html", "_blank", "toolbar=no,scrollbars=no,resizable=no,top=500,left=500,width=500,height=500");
 			});
 		}
+
+		// function attachClickEventToSubmit() {
+		// 	$('#submitCanvasBtn').click(function() {
+		// 		let booked = true;
+		// 		window.sessionStorage(data[index].name);
+		// 		setTimeout(function(){ 1200000 });
+		// 		document.getElementById("reservations").innerHTML = "Un vélo a été réservé à la station" + data[index].name) + ". La réservation expire dans " + mm&ss + "."
+		// 		sessionStorage.;
+		// 	});
+		// }
 });
 
