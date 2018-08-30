@@ -7,15 +7,21 @@
 
 
 		function init() {
+			// StationMap property
 			let map;
+
+
 			loadMap();
 			getStationData();
 			$('#stationDetails').hide();
 			attachClickEventToCanvas();
 			attachClickEventToSubmit();
+
+			// StationMap property
 			let booked;
 		}
-
+		
+		// StationMap method
 		function loadMap() {
 			mapboxgl.accessToken = 'pk.eyJ1IjoibnRvbnl5eSIsImEiOiJjamw2enA5eW8waGh0M3BvNXg0NXZieTliIn0.-3QrQ4Nba7o2SOaLyH7mIg';
 		    map = new mapboxgl.Map({
@@ -31,9 +37,7 @@
 			 });
 		}
 
-
-
-
+		// StationMap method
 		function getStationData() {
 			var apiUrl = 'https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=525032ff79d1c138597fd9ea7f6640d8939eb118';
 
@@ -43,10 +47,13 @@
 					data[i].name = data[i].name.split(/-(.+)/)[1];
 					setMarker(data[i].position.lat, data[i].position.lng, data[i].name, i, data);
 				}
+
+			}).fail(function() {
+				$('#errorMsg').show();
 			});
 		}
 
-
+		// StationMap method
 		function setMarker(latitude, longitude, stationName, index, data) {
 
 			// Create a popup, but don't add it to the map yet.
@@ -93,17 +100,22 @@
 		
 		function attachClickEventToCanvas() {
 			$('.bookBtn').click(function() {
-				window.open("canvas.html", "_blank", "toolbar=no,scrollbars=no,resizable=no,top=500,left=500,width=500,height=500");
+				$('.bookBtn').hide();
 			});
 		}
 
 		// function attachClickEventToSubmit() {
 		// 	$('#submitCanvasBtn').click(function() {
-		// 		let booked = true;
-		// 		window.sessionStorage(data[index].name);
+				data[index].booked = true;
+				data[index].bookTime = new Date();
+		 		window.sessionStorage(data[index]);
+
+
+
 		// 		setTimeout(function(){ 1200000 });
 		// 		document.getElementById("reservations").innerHTML = "Un vélo a été réservé à la station" + data[index].name) + ". La réservation expire dans " + mm&ss + "."
-		// 		sessionStorage.;
+		// 		sessionStorage.date[index]name;
+		// 		console.log(sessionStorage)
 		// 	});
 		// }
 });

@@ -1,8 +1,10 @@
 "use strict";
-
+var slides = ["url1", "url2"];
 var slideIndex = 1;
 showSlides(slideIndex);
 
+
+/* 
 // Next/previous controls
 function plusSlides(n) {
   showSlides(slideIndex += n);
@@ -15,7 +17,7 @@ function currentSlide(n) {
 
 function showSlides(n) {
   var i;
-  var slides = document.getElementsByClassName("mySlides");
+  slides = document.getElementsByClassName("mySlides");
   var dots = document.getElementsByClassName("dot");
   if (n > slides.length) {slideIndex = 1} 
   if (n < 1) {slideIndex = slides.length}
@@ -27,14 +29,17 @@ function showSlides(n) {
   }
   slides[slideIndex-1].style.display = "block"; 
   dots[slideIndex-1].className += " active";
-}
+} */
 
 document.addEventListener("keydown", function(e){
   if(e.keyCode === 37){
-      slides[slideIndex-1]();
+      slides[slideIndex-1];
+      //change img src attribut url
+
   }
   else if(e.keyCode === 39){
       slides[slideIndex+1]();
+        //change img src attribut url
   }
   });
   

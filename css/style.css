@@ -172,3 +172,6 @@ footer {
 	text-transform: capitalize;
 }
 
+#errorMsg {
+  display: none;
+}
