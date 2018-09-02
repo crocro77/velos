@@ -101,6 +101,8 @@
 		function attachClickEventToCanvas() {
 			$('.bookBtn').click(function() {
 				$('.bookBtn').hide();
+				$('#stationDetails').hide();
+				$('#canvas').show();
 			});
 		}
 

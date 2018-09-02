@@ -24,7 +24,7 @@
       <img src="img/slider1.jpg" style="width:100%">
       <div class="text">Caption Text</div>
     </div>
-<!-- 
+    <!-- 
     <div class="mySlides fade">
       <div class="numbertext">2 / 3</div>
       <img src="img/slider2.jpg" style="width:100%">
@@ -52,7 +52,7 @@
 </header>
 
 <body>
-  <h1 id="errorMsg">Erreur</h1>
+  <h1 id="errorMsg">Erreur : Revenez plus tard</h1>
   <div class="container">
     <div id="map"></div>
 
@@ -68,18 +68,21 @@
         <div id="available_bikes"></div>
         <div id="avalaible_bike_stands"></div>
         <button class="bookBtn">Réserver un vélo</button>
-        <div></div>
+        <div id="canvas">
+          <canvas id="canvasWindow" width="400" height="400"></canvas>
+          <button id="clearCanvasBtn">Effacer</button>
+          <button id="submitCanvasBtn">Valider</button>
+        </div>
       </div>
     </div>
 
   </div>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
-  <script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
-  <script src="js/slider.js"></script>
+  <!-- <script src="js/slider.js"></script> -->
   <!--<script src="js/map.js"></script>-->
   <script src="js/decaux.js"></script>
-  <script src="js/popup.js"></script>
+  <script src="js/canvas.js"></script>
 
 </body>
 
