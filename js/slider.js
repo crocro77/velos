@@ -3,8 +3,7 @@ var slides = ["url1", "url2"];
 var slideIndex = 1;
 showSlides(slideIndex);
 
-
-/* 
+ 
 // Next/previous controls
 function plusSlides(n) {
   showSlides(slideIndex += n);
@@ -29,7 +28,7 @@ function showSlides(n) {
   }
   slides[slideIndex-1].style.display = "block"; 
   dots[slideIndex-1].className += " active";
-} */
+} 
 
 document.addEventListener("keydown", function(e){
   if(e.keyCode === 37){
