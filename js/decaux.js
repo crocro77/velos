@@ -108,12 +108,9 @@
 
 		// function attachClickEventToSubmit() {
 		// 	$('#submitCanvasBtn').click(function() {
-				data[index].booked = true;
-				data[index].bookTime = new Date();
-		 		window.sessionStorage(data[index]);
-
-
-
+		// data[index].booked = true;
+		// data[index].bookTime = new Date();
+ 		// window.sessionStorage(data[index]);
 		// 		setTimeout(function(){ 1200000 });
 		// 		document.getElementById("reservations").innerHTML = "Un vélo a été réservé à la station" + data[index].name) + ". La réservation expire dans " + mm&ss + "."
 		// 		sessionStorage.date[index]name;
