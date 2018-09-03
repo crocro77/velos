@@ -135,7 +135,7 @@ footer {
   to {opacity: 1}
 }
 
-.bookBtn {
+.bookBtn, #clearCanvasBtn, #submitCanvasBtn, #cancelCanvasBtn {
 	display: block;
 	color: white;
 	background-color: black;
@@ -149,6 +149,12 @@ footer {
 	margin: 20px auto;
 }
 
+#clearCanvasBtn, #submitCanvasBtn, #cancelCanvasBtn {
+  font-size: 20px;
+  margin: 5px auto;
+  padding: 5px 25px;
+}
+
 .bookBtn:hover {
 	color: black;
 	background-color: lightgray;
@@ -159,7 +165,7 @@ footer {
   display: none;
 }
 
-#instruction, #name, #address, #status, #bike_stands, #available_bikes, #available_bike_stands {
+#instruction, #name, #address, #status, #bike_stands, #available_bikes, #available_bike_stands, .signature {
 	font-family: Tahoma;
 	font-size: 20px;
 	margin-top: 25px;
@@ -179,6 +185,9 @@ footer {
 #errorMsg {
   display: none;
   color: red;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 5px;
   text-align: center;
 }
 
@@ -189,4 +198,7 @@ footer {
 
 #canvasWindow {
   background-color: lightgray;
+  display: block;
+  margin: auto;
+  margin-bottom: 10px;
 }
