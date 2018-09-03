@@ -1,15 +1,15 @@
 #map { 
 	width: 70%;
-	height: 600px;
+	height: 700px;
 	margin: auto;
-	border: 20px gray solid;
+  border: 10px gray solid;
 }
 
 #details {
 	width: 30%;
-	height: 600px;
-	border: 20px solid black;
-	background-color: white;
+	height: 700px;
+	border: 10px solid black;
+  background-color: white;
 }
 
 header {
@@ -40,7 +40,7 @@ footer {
 .container {
 	display: flex;
 	flex-direction: row;
-	justify-content: space-around;
+	justify-content: space-between;
 }
 
 /* Slideshow container */
