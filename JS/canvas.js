@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
-  var context = document.getElementById('canvas').getContext("2d");
+  var context = document.getElementById('canvasWindow').getContext("2d");
 
-  $('#canvas').mousedown(function (e) {
+  $('#canvasWindow').mousedown(function (e) {
     var mouseX = e.pageX - this.offsetLeft;
     var mouseY = e.pageY - this.offsetTop;
 
@@ -11,18 +11,18 @@ $(document).ready(function () {
     redraw();
   });
 
-  $('#canvas').mousemove(function (e) {
+  $('#canvasWindow').mousemove(function (e) {
     if (paint) {
       addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
       redraw();
     }
   });
 
-  $('#canvas').mouseup(function (e) {
+  $('#canvasWindow').mouseup(function (e) {
     paint = false;
   });
 
-  $('#canvas').mouseleave(function (e) {
+  $('#canvasWindow').mouseleave(function (e) {
     paint = false;
   });
 

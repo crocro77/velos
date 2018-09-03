@@ -24,7 +24,7 @@ $(document).ready(function () {
                     zoom: 12
                 });
             },
-            getStation : function getStationData() {
+            getStation: function getStationData() {
                 var apiUrl = 'https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=525032ff79d1c138597fd9ea7f6640d8939eb118';
 
                 $.get(apiUrl, function (data) {
@@ -38,7 +38,7 @@ $(document).ready(function () {
                     $('#errorMsg').show();
                 });
             },
-            this.stationList : function setMarker(latitude, longitude, stationName, index, data) {
+            this.stationList: function setMarker(latitude, longitude, stationName, index, data) {
             var popup = new mapboxgl.Popup({
                 closeButton: true,
                 closeOnClick: true
