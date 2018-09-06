@@ -1,13 +1,55 @@
-function CrocoStationMap() {		
+'use strict';
+
+function Reservation(){
+   
+    // au chargement de la page on reprend la reservation du session storage:
+    var stationReservee = sessionStorage.getItem('bookInfo') && sessionStorage.getItem('bookInfo')!='undefined' ? JSON.parse(sessionStorage.getItem('bookInfo')) : {};
+                   
+    // la fonction appelee pour reserver un velo sur une station:
+    this.reserver = function(station){
+        console.info('RESERVER',station);
+        stationReservee = station;
+        sessionStorage.setItem('bookTime',Date.now());
+        sessionStorage.setItem('bookInfo',JSON.stringify(station));
+    }
+   
+    // la fonction qui refresh le footer
+    this.refresh = function(){
+        var $reservations = $('#reservations');
+        var bookTime = sessionStorage.getItem('bookTime');
+        if(!bookTime){
+            $reservations.text("Vous n'avez aucune reservation");
+        }else{
+            var bookDiff = Date.now()-bookTime;
+            var timeLeft = 20*60 - Math.round(bookDiff/1000); // Date.now() est en millisecondes
+            if(timeLeft<0){
+                $reservations.text("Reservation expiree");             
+                //TODO: remove from sessionStorage;
+            }else{                 
+                var mm = Math.floor(timeLeft / 60);
+                var ss = timeLeft - mm * 60;               
+                $reservations.text("Un vélo a été réservé à la station "+stationReservee.name+ ". La réservation expire dans " + (mm<10?'0'+mm:mm)+':'+(ss<10?'0'+ss:ss));
+            }
+        }
+    }
+   
+    // on lance le refresh chaque seconde
+    setInterval(this.refresh,1000);
+}
+
+
+function StationMap() {		
 	
-	var map;
+    var map;
+    var clickedStation; // la derniere station cliquee
+    var reservation = new Reservation();  
 	
 	this.init = function(){
 		this.loadMap();
 		this.getStationData();
 		$('#stationDetails').hide();
 		this.attachClickEventToCanvas();
-		//attachClickEventToSubmit();
+        this.attachClickEventToSubmit();
 	}
 	
 	this.loadMap = function(){
@@ -55,6 +97,7 @@ function CrocoStationMap() {
 		el.style.width ='30px';
 		el.style.height = '30px';
 		el.addEventListener('click', function() {
+            clickedStation = data[index];
 			$('#name').html("Nom de la Station : " + data[index].name);
 			$('#address').html("Adresse de la Station : " + data[index].address);
 			$('#status').html("Statut de la Station : " + data[index].status);
@@ -76,12 +119,22 @@ function CrocoStationMap() {
 			$('.bookBtn').hide();
 			$('#canvas').show();
 		});
-	}
+    }
+    
+    this.attachClickEventToSubmit = function() {
+        $('#submitCanvasBtn').click(function() {
+        //$('.bookBtn').click(function() {
+            reservation.reserver(clickedStation);
+        $('#canvas').hide();
+        $('.bookBtn').show();
+        });
+    }
 }	
+
 
 //--------------------------------------------
 
 $( document ).ready(function() {
-	var station = new CrocoStationMap();
+	var station = new StationMap();
 	station.init();
 });

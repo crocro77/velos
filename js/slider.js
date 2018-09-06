@@ -1,44 +1,42 @@
 "use strict";
-var slides = ["url1", "url2"];
-var slideIndex = 1;
-showSlides(slideIndex);
 
- 
-// Next/previous controls
-function plusSlides(n) {
-  showSlides(slideIndex += n);
-}
+function init() {
 
-// Thumbnail image controls
-function currentSlide(n) {
-  showSlides(slideIndex = n);
-}
+  var slider = {
+    index: 0,
+    images: ['img/slider1.jpg', 'img/slider2.jpg', 'img/slider3.jpg'],
+    next: function () {
+      if (slider.index + 1 < slider.images.length) {
 
-function showSlides(n) {
-  var i;
-  slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("dot");
-  if (n > slides.length) {slideIndex = 1} 
-  if (n < 1) {slideIndex = slides.length}
-  for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none"; 
-  }
-  for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block"; 
-  dots[slideIndex-1].className += " active";
-} 
+        slider.index += 1;
+        document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
 
-document.addEventListener("keydown", function(e){
-  if(e.keyCode === 37){
-      slides[slideIndex-1];
-      //change img src attribut url
+      }
 
-  }
-  else if(e.keyCode === 39){
-      slides[slideIndex+1]();
-        //change img src attribut url
-  }
+    },
+    previous: function () {
+      if (slider.index - 1 >= 0) {
+
+        slider.index -= 1;
+        document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
+      }
+    }
+  };
+
+  document.getElementById("previous").onclick = slider.previous;
+  document.getElementById("next").onclick = slider.next;
+
+
+  document.addEventListener("keydown", function (e) {
+    if (e.keyCode === 37) {
+
+      slider.previous();
+
+    }
+    else if (e.keyCode === 39) {
+      slider.next();
+
+    }
   });
-  
+
+}
