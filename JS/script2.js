@@ -18,12 +18,12 @@ function Reservation(){
         var $reservations = $('#reservations');
         var bookTime = sessionStorage.getItem('bookTime');
         if(!bookTime){
-            $reservations.text("Vous n'avez aucune reservation");
+            $reservations.text("Vous n'avez aucune réservation");
         }else{
             var bookDiff = Date.now()-bookTime;
             var timeLeft = 20*60 - Math.round(bookDiff/1000); // Date.now() est en millisecondes
             if(timeLeft<0){
-                $reservations.text("Reservation expiree");             
+                $reservations.text("Réservation expirée");             
                 //TODO: remove from sessionStorage;
             }else{                 
                 var mm = Math.floor(timeLeft / 60);
@@ -49,7 +49,8 @@ function StationMap() {
 		this.getStationData();
 		$('#stationDetails').hide();
 		this.attachClickEventToCanvas();
-        this.attachClickEventToSubmit();
+		this.attachClickEventToSubmit();
+		this.attachClickEventToCancel();
 	}
 	
 	this.loadMap = function(){
@@ -60,19 +61,15 @@ function StationMap() {
 			center: [4.83927, 45.750945],
 			zoom: 12
 		});
-    	map.on('click', function(e) {
-			var features = map.queryRenderedFeatures(e.point);
-			console.log(features)
-		});	
 	}
 	
 	this.getStationData = function() {
-		var apiUrl = 'https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=525032ff79d1c138597fd9ea7f6640d8939eb118';
-		var that = this;
+		const apiUrl = 'https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=525032ff79d1c138597fd9ea7f6640d8939eb118';
+		var flex = this;
 		$.get( apiUrl, function( data ) {
-			for(i = 0; i < data.length; i++) {
+			for(let i = 0; i < data.length; i++) {
 				data[i].name = data[i].name.split(/-(.+)/)[1];
-				that.setMarker(data[i].position.lat, data[i].position.lng, data[i].name, i, data);
+				flex.setMarker(data[i].position.lat, data[i].position.lng, data[i].name, i, data);
 			}
 		}).fail(function() {
 			$('#errorMsg').show();
@@ -80,7 +77,6 @@ function StationMap() {
 	}
 	
 	this.setMarker = function(latitude, longitude, stationName, index, data) {
-		// Create a popup, but don't add it to the map yet.
 		var popup = new mapboxgl.Popup({
 			closeButton: true,
 			closeOnClick: true
@@ -123,12 +119,20 @@ function StationMap() {
     
     this.attachClickEventToSubmit = function() {
         $('#submitCanvasBtn').click(function() {
-        //$('.bookBtn').click(function() {
             reservation.reserver(clickedStation);
         $('#canvas').hide();
         $('.bookBtn').show();
         });
-    }
+	}
+	
+	this.attachClickEventToCancel = function() {
+		$('#cancelCanvasBtn').click(function() {
+		$('#canvas').hide();
+		$('#stationDetails').hide();
+		$('#instruction').show();
+		$('.bookBtn').show();
+		});
+	}
 }	
 
 

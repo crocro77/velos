@@ -17,6 +17,7 @@ header {
 	color: white;
 	padding: 25px 50px;
 	margin-bottom: 15px;
+	border: 5px solid white;
 }
 
 #slider {
@@ -36,10 +37,15 @@ body {
 }
 
 footer {
-	background-color: white;
-	color: darkgray;
+	background-color: lightgray;
+	border: 5px solid white;
+	color: black;
 	padding: 25px 50px;
 	margin-top: 15px;
+	text-align: center;
+	font-size: 30px;
+	font-weight: bold;
+	font-family: 'Tahoma';
 }
 
 .container {
