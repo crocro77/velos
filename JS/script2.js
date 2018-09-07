@@ -102,6 +102,7 @@ function StationMap() {
 			$('#available_bike_stands').html("Nombre de bornes libres : " + data[index].available_bike_stands);
 			$('#stationDetails').show();
 			$('#instruction').hide();
+			$('#velov_station_img').hide();
 		});
 		// add marker to map
 		new mapboxgl.Marker(el)
@@ -120,17 +121,20 @@ function StationMap() {
     this.attachClickEventToSubmit = function() {
         $('#submitCanvasBtn').click(function() {
             reservation.reserver(clickedStation);
-        $('#canvas').hide();
-        $('.bookBtn').show();
+		$('#canvas').hide();
+		$('#stationDetails').hide();
+		$('#velov_station_img').show();
+		$('#instruction').show();
         });
 	}
 	
 	this.attachClickEventToCancel = function() {
-		$('#cancelCanvasBtn').click(function() {
+		$('#cancelCanvasBtn').click(function() {	
 		$('#canvas').hide();
 		$('#stationDetails').hide();
 		$('#instruction').show();
 		$('.bookBtn').show();
+		$('#velov_station_img').show();
 		});
 	}
 }	

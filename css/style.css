@@ -21,8 +21,8 @@ header {
 }
 
 #slider {
-  display: block;
-  margin: auto;
+  display: inline-block;
+  align-items: center;
 }
 
 #titre {
@@ -57,13 +57,6 @@ footer {
 /* Next & previous buttons */
 #previous, #next {
   cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
 }
 
 .bookBtn, #clearCanvasBtn, #submitCanvasBtn, #cancelCanvasBtn {
@@ -107,6 +100,14 @@ footer {
 .logo_velov {
 	display: block;
 	margin: 0 auto;
+}
+
+#velov_station_img > img {
+	width: 90%;
+	height: 45%;
+	display: block;
+	margin: 0 auto;
+	padding-top: 30px;
 }
 
 .stationName {

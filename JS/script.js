@@ -62,6 +62,7 @@ $(document).ready(function () {
                     $('#available_bike_stands').html("Nombre de bornes libres : " + data[index].available_bike_stands);
                     $('#stationDetails').show();
                     $('#instruction').hide();
+                    
                 });
 
                 new mapboxgl.Marker(el)
