@@ -125,6 +125,7 @@ function StationMap() {
 		$('#stationDetails').hide();
 		$('#velov_station_img').show();
 		$('#instruction').show();
+		$('.bookBtn').show();
         });
 	}
 	

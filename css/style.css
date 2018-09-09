@@ -21,8 +21,8 @@ header {
 }
 
 #slider {
-  display: inline-block;
-  align-items: center;
+	display: flex;
+	justify-content: center;
 }
 
 #titre {
@@ -54,9 +54,23 @@ footer {
 	justify-content: space-between;
 }
 
-/* Next & previous buttons */
+#sliderImage {
+	position: relative;
+}
+
 #previous, #next {
+	position: absolute;
   cursor: pointer;
+}
+
+#previous {
+	top: 30%;
+	left: 23%;
+}
+
+#next {
+	top: 30%;
+	right: 23%;
 }
 
 .bookBtn, #clearCanvasBtn, #submitCanvasBtn, #cancelCanvasBtn {
@@ -133,4 +147,8 @@ footer {
   display: block;
   margin: auto;
   margin-bottom: 10px;
+}
+
+.status {
+	background-color: none;
 }
