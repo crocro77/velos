@@ -26,7 +26,7 @@ function StationMap() {
 			container: 'map',
 			style: 'mapbox://styles/mapbox/streets-v9',
 			center: [4.83927, 45.750945],
-			zoom: 12
+			zoom: 12.5
 		});
 	}
 	
@@ -61,7 +61,7 @@ function StationMap() {
 		el.style.height = '30px';
 		el.addEventListener('click', function() {
             clickedStation = data[index];
-			$('#name').html("Nom de la Station : " + data[index].name);
+			$('#name').html("Nom de la Station : " + data[index].name.toLowerCase());
 			$('#address').html("Adresse de la Station : " + data[index].address);
 			$('#status').html("Statut de la Station : " + data[index].status);
 			$('#status').css('background-color', data[index].status=='OPEN' ? 'green' : 'red');
@@ -95,7 +95,7 @@ function StationMap() {
     
     this.attachClickEventToSubmit = function() {
         $('#submitCanvasBtn').click(function() {
-            reservation.reserver(clickedStation);
+			reservation.reserver(clickedStation);
 		$('#canvas').hide();
 		$('#stationDetails').hide();
 		$('#velov_station_img').show();
