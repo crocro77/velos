@@ -103,7 +103,7 @@ footer {
   display: none;
 }
 
-#instruction, #name, #address, #status, #bike_stands, #available_bikes, #available_bike_stands, .signature {
+#instruction, #name, #address, #status, #bike_stands, #available_bikes, #available_bike_stands, form, .signature {
 	font-family: Tahoma;
 	font-size: 20px;
 	margin-top: 25px;
@@ -149,6 +149,10 @@ footer {
   margin-bottom: 10px;
 }
 
-.status {
-	background-color: none;
+.marker {
+	background-image: url("../img/red_marker_bike.png");
+	background-size: 20px auto;
+	background-repeat: no-repeat;
+	width: 30px;
+	height: 30px;	
 }
