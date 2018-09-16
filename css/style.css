@@ -24,6 +24,11 @@ header {
 	justify-content: center;
 }
 
+#sliderImage {
+	border: 1px solid black;
+	box-shadow: 1px 1px gray;
+}
+
 #titre {
 	font-family: Tahoma;
 	font-size: 40px;
@@ -121,6 +126,8 @@ footer {
 	display: block;
 	margin: 0 auto;
 	padding-top: 30px;
+	border: 1px solid black;
+	box-shadow: 1px 1px gray;
 }
 
 .stationName {

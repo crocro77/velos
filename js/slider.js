@@ -36,7 +36,12 @@ function init() {
     else if (e.keyCode === 39) {
       slider.next();
 
-    }
+    } 
   });
+
+  setInterval(function() { 
+    $('#sliderImage')
+      slider.next()
+  }, 5000);
 
 }

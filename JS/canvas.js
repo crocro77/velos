@@ -39,7 +39,7 @@ $(document).ready(function () {
 
   function redraw() {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
-    // console.log(context.canvas.width)
+
     context.strokeStyle = "#000";
     context.lineJoin = "round";
     context.lineWidth = 5;
