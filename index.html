@@ -35,10 +35,11 @@
         <div id="bike_stands"></div>
         <div id="available_bikes"></div>
         <div id="available_bike_stands"></div>
-        <form>
-          Nom : <input id="lastname" type="text" name="lastname" placeholder="Votre Nom">
+        <form id="bookForm" method="get">
+          <label for="bookForm"></label>
+          Nom : <input id="lastname" type="text" name="lastname" placeholder="Votre Nom" onkeyup="sessionStorage.setItem(this.name,this.value)">
           <br>
-          Prénom : <input id="firstname" type="text" name="firstname" placeholder="Votre Prénom">
+          Prénom : <input id="firstname" type="text" name="firstname" placeholder="Votre Prénom" onkeyup="sessionStorage.setItem(this.name,this.value)">
           <br>
         </form>
         <button class="bookBtn">Réserver un vélo</button>

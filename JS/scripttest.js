@@ -112,6 +112,16 @@ function Reservation(){
     // au chargement de la page on reprend la reservation du session storage
     var stationReservee = sessionStorage.getItem('bookInfo') && sessionStorage.getItem('bookInfo')!='undefined' ? JSON.parse(sessionStorage.getItem('bookInfo')) : {};
 
+    var lastname = sessionStorage.lastname;
+	if (lastname == null || typeof(lastname) == "undefined")
+		lastname = "";
+    document.getElementById("lastname").value = lastname;
+    
+    var firstname = sessionStorage.firstname;
+	if (firstname == null || typeof(firstname) == "undefined")
+		firstname = "";
+    document.getElementById("firstname").value = firstname;
+    
     // la fonction appelee pour reserver un velo sur une station
     this.reserver = function(station){
         stationReservee = station;
@@ -133,7 +143,7 @@ function Reservation(){
             } else {
                 var mm = Math.floor(timeLeft / 60);
                 var ss = timeLeft - mm * 60;
-                $reservations.text("Un vélo a été réservé à la station "+ stationReservee.name + ". La réservation expire dans " + (mm<10?'0' +mm:mm)+ " minutes et "+ (ss<10?'0' +ss:ss)+ " secondes.");
+                $reservations.text("Un vélo a été réservé à la station "+ stationReservee.name + " par " + lastname + " " + firstname +". La réservation expire dans " + (mm<10?'0' +mm:mm)+ " minutes et "+ (ss<10?'0' +ss:ss)+ " secondes.");
             }
         }
     }
