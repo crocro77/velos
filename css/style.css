@@ -63,13 +63,13 @@ footer {
 }
 
 #previous {
-	top: 30%;
-	left: 23%;
+	top: 15%;
+	left: 22%;
 }
 
 #next {
-	top: 30%;
-	right: 23%;
+	top: 15%;
+	right: 22%;
 }
 
 .bookBtn, #clearCanvasBtn, #submitCanvasBtn, #cancelCanvasBtn {
@@ -142,7 +142,8 @@ footer {
 }
 
 #canvasWindow {
-  background-color: lightgray;
+	background-color: lightgray;
+	border: 1px black solid;
   display: block;
   margin: auto;
   margin-bottom: 10px;

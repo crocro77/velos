@@ -143,6 +143,7 @@ function Reservation() {
         stationReservee = station;
         sessionStorage.setItem('bookTime', Date.now());
         sessionStorage.setItem('bookInfo', JSON.stringify(station));
+        data[index].available_bikes - 1;
     }
 
     // la fonction qui refresh le footer
