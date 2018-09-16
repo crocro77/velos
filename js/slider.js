@@ -4,7 +4,7 @@ function init() {
 
   var slider = {
     index: 0,
-    images: ['img/slider1.jpg', 'img/slider2.jpg', 'img/slider3.jpg'],
+    images: ['img/slider01.jpg', 'img/slider2.jpg', 'img/slider3.jpg'],
     next: function () {
       if (slider.index + 1 < slider.images.length) {
 
