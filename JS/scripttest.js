@@ -73,6 +73,7 @@ function StationMap() {
             $('#velov_station_img').hide();
         });
 
+        // ajout des marqueurs sur la map
         new mapboxgl.Marker(el)
             .setLngLat([longitude, latitude])
             .setPopup(popup)
@@ -84,18 +85,23 @@ function StationMap() {
         $('.bookBtn').click(function () {
             $('bookBtn').hide();
             $('#canvas').show();
-            switch (alertError) {
-                case clickedStation.status === 'CLOSED' || clickedStation.available_bikes === 0 :
-                    $('#canvas').hide();
-                    $('.bookBtn').show();
-                    alert("La station est fermée ou aucun vélo de disponible ! Essayez une autre station !");
-                    break;
-                case lastname != lastname.value || firstname != firstname.value :
-                    $('#canvas').hide();
-                    $('.bookBtn').show();
-                    alert("Veuillez saisir vos nom et prénom !");
-                    break;
-                }
+            if (clickedStation.status === 'CLOSED' || clickedStation.available_bikes === 0){
+				$('#canvas').hide();
+				$('.bookBtn').show();
+				alert("La station est fermée ou aucun vélo de disponible ! Essayez une autre station !");
+			}
+            // switch (alertError) {
+            //     case clickedStation.status === 'CLOSED' || clickedStation.available_bikes === 0 :
+            //         $('#canvas').hide();
+            //         $('.bookBtn').show();
+            //         alert("La station est fermée ou aucun vélo de disponible ! Essayez une autre station !");
+            //         break;
+            //     case lastname != lastname.value || firstname != firstname.value :
+            //         $('#canvas').hide();
+            //         $('.bookBtn').show();
+            //         alert("Veuillez saisir vos nom et prénom !");
+            //         break;
+            //     }
             });
     }
 
@@ -143,11 +149,13 @@ function Reservation() {
         stationReservee = station;
         sessionStorage.setItem('bookTime', Date.now());
         sessionStorage.setItem('bookInfo', JSON.stringify(station));
-        data[index].available_bikes - 1;
+        // data[index].available_bikes - 1;
     }
 
     // la fonction qui refresh le footer
     this.refresh = function () {
+        firstname = sessionStorage.getItem("firstname","");
+        lastname = sessionStorage.getItem("lastname","");
         var $reservations = $('#reservations');
         var bookTime = sessionStorage.getItem('bookTime');
         if (!bookTime) {

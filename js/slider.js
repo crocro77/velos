@@ -40,8 +40,9 @@ function init() {
   });
 
   setInterval(function() { 
-    $('#sliderImage')
-      slider.next()
+    slider.next()
+    if (slider.active) slider.next()
+    // bouton pause :   slider.active = !slider.active
   }, 5000);
 
 }
