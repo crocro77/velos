@@ -5,6 +5,7 @@ $(document).ready(function () {
     station.init();
 });
 
+// la fonction qui appelle la carte et les stations
 function StationMap() {
 
     var map;
@@ -20,6 +21,7 @@ function StationMap() {
         this.attachClickEventToCancel();
     }
 
+    // la carte mapbox
     this.loadMap = function () {
         mapboxgl.accessToken = 'pk.eyJ1IjoibnRvbnl5eSIsImEiOiJjamw2enA5eW8waGh0M3BvNXg0NXZieTliIn0.-3QrQ4Nba7o2SOaLyH7mIg';
         map = new mapboxgl.Map({
@@ -30,6 +32,7 @@ function StationMap() {
         });
     }
 
+    // l'API JCDecaux
     this.getStationData = function () {
         const apiUrl = 'https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=525032ff79d1c138597fd9ea7f6640d8939eb118';
         var flex = this;
@@ -43,6 +46,7 @@ function StationMap() {
         });
     }
 
+    // le placement des marqueurs, de leurs popups et de leurs affichages détaillés des stations dans la div à côté de la map
     this.setMarker = function (latitude, longitude, stationName, index, data) {
         var popup = new mapboxgl.Popup({
             closeButton: true,
@@ -75,6 +79,7 @@ function StationMap() {
             .addTo(map);
     }
 
+    // la fonction du bouton reserver un vélo avec condition si station fermée ou zéro vélo disponible
     this.attachClickEventToCanvas = function(){
         $('.bookBtn').click(function(){
             $('bookBtn').hide();
@@ -87,6 +92,7 @@ function StationMap() {
         });
     }
 
+    // la fonction du bouton valider 
     this.attachClickEventToSubmit = function(){
         $('#submitCanvasBtn').click(function() {
             reservation.reserver(clickedStation);
@@ -98,6 +104,7 @@ function StationMap() {
         });
     }
 
+    // la fonction du bouton annuler
     this.attachClickEventToCancel = function(){
         $('#cancelCanvasBtn').click(function(){
         $('#canvas').hide();
@@ -108,10 +115,12 @@ function StationMap() {
     }
 }
 
+// la fonction qui gère la réservation avec le storage et le timer
 function Reservation(){
     // au chargement de la page on reprend la reservation du session storage
     var stationReservee = sessionStorage.getItem('bookInfo') && sessionStorage.getItem('bookInfo')!='undefined' ? JSON.parse(sessionStorage.getItem('bookInfo')) : {};
 
+    // récupération des données du formulaire nom et prénom
     var lastname = sessionStorage.lastname;
 	if (lastname == null || typeof(lastname) == "undefined")
 		lastname = "";
