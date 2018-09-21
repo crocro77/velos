@@ -35,14 +35,14 @@ function init() {
     }
     else if (e.keyCode === 39) {
       slider.next();
-
-    } 
+    }
+    // else if (e.keycode === 32) {
+    //   slider.active = !slider.active;
+    // }
   });
 
   setInterval(function() { 
-    slider.next()
-    if (slider.active) slider.next()
-    // bouton pause :   slider.active = !slider.active
+    slider.next();
   }, 5000);
 
 }

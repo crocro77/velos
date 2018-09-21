@@ -35,13 +35,15 @@
         <div id="available_bikes"></div>
         <div id="available_bike_stands"></div>
         <form id="bookForm" method="get">
-          <label for="bookForm"></label>
-          Nom : <input id="lastname" type="text" name="lastname" placeholder="Votre Nom" onkeyup="sessionStorage.setItem(this.name,this.value)">
-          <br>
-          Prénom : <input id="firstname" type="text" name="firstname" placeholder="Votre Prénom" onkeyup="sessionStorage.setItem(this.name,this.value)">
-          <br>
+          <div class="itemRequired">
+            <label for="bookForm"></label>
+            Nom : <input id="lastname" type="text" name="lastname" onkeyup="sessionStorage.setItem(this.name,this.value)">
+            <br>
+            Prénom : <input id="firstname" type="text" name="firstname" onkeyup="sessionStorage.setItem(this.name,this.value)">
+            <br>
+          </div>
         </form>
-        <button class="bookBtn">Réserver un vélo</button>
+        <button class="bookBtn" onclick="formcheck(); return false">Réserver un vélo</button>
       </div>
     </div>
 
@@ -62,7 +64,7 @@
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
   <script src="js/slider.js"></script>
   <script src="js/script.js"></script>
-  <script src="js/canvas.js"></script>
+  <script src="js/canvastest.js"></script>
 
 </body>
 

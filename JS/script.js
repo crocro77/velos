@@ -85,29 +85,19 @@ function StationMap() {
         $('.bookBtn').click(function () {
             $('bookBtn').hide();
             $('#canvas').show();
-            if (clickedStation.status === 'CLOSED' || clickedStation.available_bikes === 0){
-				$('#canvas').hide();
-				$('.bookBtn').show();
-				alert("La station est fermée ou aucun vélo de disponible ! Essayez une autre station !");
-			}
-            // switch (alertError) {
-            //     case clickedStation.status === 'CLOSED' || clickedStation.available_bikes === 0 :
-            //         $('#canvas').hide();
-            //         $('.bookBtn').show();
-            //         alert("La station est fermée ou aucun vélo de disponible ! Essayez une autre station !");
-            //         break;
-            //     case lastname != lastname.value || firstname != firstname.value :
-            //         $('#canvas').hide();
-            //         $('.bookBtn').show();
-            //         alert("Veuillez saisir vos nom et prénom !");
-            //         break;
-            //     }
-            });
+            if (clickedStation.status === 'CLOSED' || clickedStation.available_bikes === 0) {
+                $('#canvas').hide();
+                $('.bookBtn').show();
+                alert("La station est fermée ou aucun vélo de disponible ! Essayez une autre station !");
+            }
+        });
     }
 
     // la fonction du bouton valider 
     this.attachClickEventToSubmit = function () {
         $('#submitCanvasBtn').click(function () {
+            // if (!paint)
+            //     alert("Merci de signer votre activer votre réservation !");
             reservation.reserver(clickedStation);
             $('#canvas').hide();
             $('stationDetails').hide();
@@ -126,6 +116,26 @@ function StationMap() {
             $('#velov_station_img').show();
         });
     }
+}
+
+function formcheck() {
+    var fields = $(".itemRequired")
+        .find("input").serializeArray();
+
+    $.each(fields, function (i, field) {
+        if (!field.value) {
+            alert("Veuillez saisir vos nom et/ou prénom !");
+            $('.bookBtn').click(function () {
+                $('#canvas').hide();
+                $('.bookBtn').show();
+            });
+        } else {
+            $('.bookBtn').click(function () {
+                $('bookBtn').hide();
+                $('#canvas').show();
+            });
+        }
+    });
 }
 
 // la fonction qui gère la réservation avec le storage et le timer
@@ -149,13 +159,13 @@ function Reservation() {
         stationReservee = station;
         sessionStorage.setItem('bookTime', Date.now());
         sessionStorage.setItem('bookInfo', JSON.stringify(station));
-        // data[index].available_bikes - 1;
+        // return data[index].available_bikes = [index] - 1;
     }
 
     // la fonction qui refresh le footer
     this.refresh = function () {
-        firstname = sessionStorage.getItem("firstname","");
-        lastname = sessionStorage.getItem("lastname","");
+        firstname = sessionStorage.getItem("firstname", "");
+        lastname = sessionStorage.getItem("lastname", "");
         var $reservations = $('#reservations');
         var bookTime = sessionStorage.getItem('bookTime');
         if (!bookTime) {
