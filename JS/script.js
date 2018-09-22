@@ -96,14 +96,15 @@ function StationMap() {
     // la fonction du bouton valider 
     this.attachClickEventToSubmit = function () {
         $('#submitCanvasBtn').click(function () {
-            // if (!paint)
-            //     alert("Merci de signer votre activer votre réservation !");
-            reservation.reserver(clickedStation);
-            $('#canvas').hide();
-            $('stationDetails').hide();
-            $('velov_station_img').show();
-            $('#instruction').show();
-            $('.bookBtn').show();
+            // si canvas signé : if (blabla()) {
+                reservation.reserver(clickedStation);
+                $('#canvas').hide();
+                $('stationDetails').hide();
+                $('velov_station_img').show();
+                $('#instruction').show();
+                $('.bookBtn').show();
+            // else blabla } else
+                // alert("Merci de signer pour activer votre réservation !");
         });
     }
 
@@ -125,6 +126,7 @@ function formcheck() {
     $.each(fields, function (i, field) {
         if (!field.value) {
             alert("Veuillez saisir vos nom et/ou prénom !");
+            // comment faire pour ne pas avoir 2x d'affilee l'alerte (combo nom+prenom du coup)
             $('.bookBtn').click(function () {
                 $('#canvas').hide();
                 $('.bookBtn').show();
@@ -159,7 +161,7 @@ function Reservation() {
         stationReservee = station;
         sessionStorage.setItem('bookTime', Date.now());
         sessionStorage.setItem('bookInfo', JSON.stringify(station));
-        // return data[index].available_bikes = [index] - 1;
+        // indiquer dans le stationdetails un velo en moins dans la station relative : return data[index].available_bikes = [index] - 1;
     }
 
     // la fonction qui refresh le footer

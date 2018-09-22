@@ -36,8 +36,9 @@ function init() {
     else if (e.keyCode === 39) {
       slider.next();
     }
+    // interrompre le slider lors de son autoplay
     // else if (e.keycode === 32) {
-    //   slider.active = !slider.active;
+    //   slider.active = !slider.active ??;
     // }
   });
 
