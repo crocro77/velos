@@ -96,15 +96,17 @@ function StationMap() {
     // la fonction du bouton valider 
     this.attachClickEventToSubmit = function () {
         $('#submitCanvasBtn').click(function () {
-            // si canvas signé : if (blabla()) {
+            if (Canvas.clickX.length > 0) {
                 reservation.reserver(clickedStation);
                 $('#canvas').hide();
                 $('stationDetails').hide();
                 $('velov_station_img').show();
                 $('#instruction').show();
                 $('.bookBtn').show();
-            // else blabla } else
-                // alert("Merci de signer pour activer votre réservation !");
+                Canvas.clearDraw();
+            } else {
+                alert("Merci de signer pour activer votre réservation !");
+            }
         });
     }
 
@@ -120,13 +122,15 @@ function StationMap() {
 }
 
 function formcheck() {
+    // on définit un boolean qu'on initialise à false
+    var hasError = false;
     var fields = $(".itemRequired")
         .find("input").serializeArray();
 
     $.each(fields, function (i, field) {
         if (!field.value) {
-            alert("Veuillez saisir vos nom et/ou prénom !");
-            // comment faire pour ne pas avoir 2x d'affilee l'alerte (combo nom+prenom du coup)
+            // on boucle sur les champs du formulaire. Si un ou plusieurs champs sont vides, on passe le boolean à true
+            hasError = true;
             $('.bookBtn').click(function () {
                 $('#canvas').hide();
                 $('.bookBtn').show();
@@ -136,8 +140,13 @@ function formcheck() {
                 $('bookBtn').hide();
                 $('#canvas').show();
             });
-        }
+        }   
     });
+
+    // en dehors de la boucle et à la fin de la fonction, si hasError est true on affiche l'alert.
+    if (hasError) {
+        alert("Veuillez saisir vos nom et/ou prénom !");
+    }
 }
 
 // la fonction qui gère la réservation avec le storage et le timer
@@ -161,7 +170,6 @@ function Reservation() {
         stationReservee = station;
         sessionStorage.setItem('bookTime', Date.now());
         sessionStorage.setItem('bookInfo', JSON.stringify(station));
-        // indiquer dans le stationdetails un velo en moins dans la station relative : return data[index].available_bikes = [index] - 1;
     }
 
     // la fonction qui refresh le footer

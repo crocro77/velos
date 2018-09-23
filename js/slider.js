@@ -23,27 +23,22 @@ function init() {
     }
   };
 
+  var sliderInterval = setInterval(function () {
+    slider.next();
+  }, 5000);
+
   document.getElementById("previous").onclick = slider.previous;
   document.getElementById("next").onclick = slider.next;
 
-
   document.addEventListener("keydown", function (e) {
     if (e.keyCode === 37) {
-
       slider.previous();
-
     }
     else if (e.keyCode === 39) {
       slider.next();
     }
-    // interrompre le slider lors de son autoplay
-    // else if (e.keycode === 32) {
-    //   slider.active = !slider.active ??;
-    // }
+    else if (e.keycode === 80) {
+      clearInterval(sliderInterval);
+    }
   });
-
-  setInterval(function() { 
-    slider.next();
-  }, 5000);
-
 }
