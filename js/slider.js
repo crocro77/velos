@@ -23,13 +23,13 @@ function init() {
     }
   };
 
-  var sliderInterval = setInterval(function () {
-    slider.next();
-  }, 5000);
-
   document.getElementById("previous").onclick = slider.previous;
   document.getElementById("next").onclick = slider.next;
 
+  var sliderInterval = setInterval(function () {
+    slider.next();
+  }, 5000);
+  
   document.addEventListener("keydown", function (e) {
     if (e.keyCode === 37) {
       slider.previous();

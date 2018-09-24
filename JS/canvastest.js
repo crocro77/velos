@@ -4,7 +4,7 @@ window.addEventListener('load', function () {
 
 var Canvas = {
     canvas: null,
-    context: null, 
+    context: null,
     line: [],
     clickDrag: [],
     clickX: [],
@@ -24,10 +24,17 @@ var Canvas = {
             that.draw();
         });
 
-        this.canvas.addEventListener('mouseup', function () {
-            that.paint = false;
-        });
+        // this.canvas.addEventListener('mouseup', function () {
+        //     that.paint = false;
+        // });
 
+        function mouseUp() {
+            this.paint = false;
+        }
+
+        let mouseUpBind = mouseUp.bind(this);
+
+        this.canvas.addEventListener('mouseup', mouseUpBind);
 
         this.canvas.addEventListener('mouseup', function (e) {
             that.draw(e.pageX, e.pageY);
