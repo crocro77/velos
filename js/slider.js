@@ -29,7 +29,7 @@ function init() {
   var sliderInterval = setInterval(function () {
     slider.next();
   }, 5000);
-  
+
   document.addEventListener("keydown", function (e) {
     if (e.keyCode === 37) {
       slider.previous();
@@ -37,7 +37,7 @@ function init() {
     else if (e.keyCode === 39) {
       slider.next();
     }
-    else if (e.keycode === 80) {
+    else if (e.keyCode === 80) {
       clearInterval(sliderInterval);
     }
   });
