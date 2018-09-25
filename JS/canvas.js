@@ -79,9 +79,9 @@ var Canvas = {
 
         this.canvas.addEventListener('mousemove', mouseMoveEventBind);
 
-        document.getElementById('clearCanvasBtn').addEventListener('click', function () {
-            that.clearDraw();
-        });
+        // document.getElementById('clearCanvasBtn').addEventListener('click', function () {
+        //     that.clearDraw();
+        // });
 
         function clearCanvasButton(){
             this.clearDraw();
