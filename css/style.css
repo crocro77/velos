@@ -29,12 +29,6 @@ header {
 	box-shadow: 1px 1px gray;
 }
 
-#titre {
-	font-family: Tahoma;
-	font-size: 40px;
-	text-align: center;
-}
-
 body {
 	background-color: lightgray;
 	padding: 5px;
@@ -84,7 +78,7 @@ footer {
 	border-radius: 25px;
 	padding: 10px 50px;
 	font-family: Tahoma;
-	font-size: 35px;
+	font-size: 30px;
 	font-weight: bold;
 	text-align: center;
 	text-decoration: none;
@@ -92,7 +86,7 @@ footer {
 }
 
 #clearCanvasBtn, #submitCanvasBtn, #cancelCanvasBtn {
-	font-size: 20px;
+	font-size: 15px;
 	margin: 5px auto;
 }
 
@@ -142,7 +136,7 @@ footer {
 	display: none;
 	border: 5px solid gray;
 	background-color: white;
-	width: 50%;
+	width: 45%;
 	margin: 10px auto;
 }
 

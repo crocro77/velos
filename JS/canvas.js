@@ -1,8 +1,10 @@
+"use strict";
+
 window.addEventListener('load', function () {
     Canvas.init();
 });
 
-var Canvas = {
+let Canvas = {
     canvas: null,
     context: null,
     line: [],
@@ -12,8 +14,7 @@ var Canvas = {
     paint: false,
     init: function () {
 
-        debugger;
-        var that = this;
+        let that = this;
         this.canvas = document.getElementById('canvasWindow');
         this.context = this.canvas.getContext('2d');
 
@@ -26,8 +27,8 @@ var Canvas = {
         // });
 
         function mouseDown(e) {
-            var mouseX = e.pageX - this.offsetLeft;
-            var mouseY = e.pageY - this.offsetTop;
+            let mouseX = e.pageX - this.offsetLeft;
+            let mouseY = e.pageY - this.offsetTop;
             this.paint = true;
             this.storeMouseClick(mouseX, mouseY);
             this.draw();
@@ -61,23 +62,23 @@ var Canvas = {
 
         this.canvas.addEventListener('mouseup', mouseUpEventBind);
 
-        // this.canvas.addEventListener('mousemove', function (e) {
-        //     if (that.paint === true) {
-        //         that.storeMouseClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
-        //         that.draw();
-        //     }
-        // });
-
-        function mouseMoveEvent(e){
-            if (this.paint === true){
-                this.storeMouseClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
-                this.draw();
+        this.canvas.addEventListener('mousemove', function (e) {
+            if (that.paint === true) {
+                that.storeMouseClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+                that.draw();
             }
-        }
+        });
 
-        let mouseMoveEventBind = mouseMoveEvent.bind(this);
+        // function mouseMoveEvent(e){
+        //     if (this.paint === true){
+        //         this.storeMouseClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+        //         this.draw();
+        //     }
+        // }
 
-        this.canvas.addEventListener('mousemove', mouseMoveEventBind);
+        // let mouseMoveEventBind = mouseMoveEvent.bind(this);
+
+        // this.canvas.addEventListener('mousemove', mouseMoveEventBind);
 
         // document.getElementById('clearCanvasBtn').addEventListener('click', function () {
         //     that.clearDraw();

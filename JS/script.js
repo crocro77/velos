@@ -1,16 +1,16 @@
 'use strict';
 
 $(document).ready(function () {
-    var station = new StationMap();
+    let station = new StationMap();
     station.init();
 });
 
 // la fonction qui appelle la carte et les stations
 function StationMap() {
 
-    var map;
-    var clickedStation;
-    var reservation = new Reservation();
+    let map;
+    let clickedStation;
+    let reservation = new Reservation();
 
     this.init = function () {
         this.loadMap();
@@ -35,7 +35,7 @@ function StationMap() {
     // l'API JCDecaux
     this.getStationData = function () {
         const apiUrl = 'https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&apiKey=525032ff79d1c138597fd9ea7f6640d8939eb118';
-        var flex = this;
+        let flex = this;
         $.get(apiUrl, function (data) {
             for (let i = 0; i < data.length; i++) {
                 data[i].name = data[i].name.split(/-(.+)/)[1];
@@ -48,14 +48,14 @@ function StationMap() {
 
     // le placement des marqueurs, de leurs popups et de leurs affichages détaillés des stations dans la div à côté de la map
     this.setMarker = function (latitude, longitude, stationName, index, data) {
-        var popup = new mapboxgl.Popup({
+        let popup = new mapboxgl.Popup({
             closeButton: true,
             closeOnClick: true,
         })
             .setLngLat([longitude, latitude])
             .setHTML("<p class='stationName'>" + stationName.toLowerCase() + "</p>")
             .addTo(map);
-        var el = document.createElement('div');
+        let el = document.createElement('div');
         el.className = 'marker';
         el.addEventListener('click', function () {
             clickedStation = data[index];
@@ -99,8 +99,8 @@ function StationMap() {
             if (Canvas.clickX.length > 0) {
                 reservation.reserver(clickedStation);
                 $('#canvas').hide();
-                $('stationDetails').hide();
-                $('velov_station_img').show();
+                $('#stationDetails').hide();
+                $('#velov_station_img').show();
                 $('#instruction').show();
                 $('.bookBtn').show();
                 Canvas.clearDraw();
@@ -123,8 +123,8 @@ function StationMap() {
 
 function formcheck() {
     // on définit un boolean qu'on initialise à false
-    var hasError = false;
-    var fields = $(".itemRequired")
+    let hasError = false;
+    let fields = $(".itemRequired")
         .find("input").serializeArray();
 
     $.each(fields, function (i, field) {
@@ -152,15 +152,15 @@ function formcheck() {
 // la fonction qui gère la réservation avec le storage et le timer
 function Reservation() {
     // au chargement de la page on reprend la reservation du session storage
-    var stationReservee = sessionStorage.getItem('bookInfo') && sessionStorage.getItem('bookInfo') != 'undefined' ? JSON.parse(sessionStorage.getItem('bookInfo')) : {};
+    let stationReservee = sessionStorage.getItem('bookInfo') && sessionStorage.getItem('bookInfo') != 'undefined' ? JSON.parse(sessionStorage.getItem('bookInfo')) : {};
 
     // récupération des données du formulaire nom et prénom
-    var lastname = sessionStorage.lastname;
+    let lastname = sessionStorage.lastname;
     if (lastname == null || typeof (lastname) == "undefined")
         lastname = "";
     document.getElementById("lastname").value = lastname;
 
-    var firstname = sessionStorage.firstname;
+    let firstname = sessionStorage.firstname;
     if (firstname == null || typeof (firstname) == "undefined")
         firstname = "";
     document.getElementById("firstname").value = firstname;
@@ -176,18 +176,18 @@ function Reservation() {
     this.refresh = function () {
         firstname = sessionStorage.getItem("firstname", "");
         lastname = sessionStorage.getItem("lastname", "");
-        var $reservations = $('#reservations');
-        var bookTime = sessionStorage.getItem('bookTime');
+        let $reservations = $('#reservations');
+        let bookTime = sessionStorage.getItem('bookTime');
         if (!bookTime) {
             $reservations.text("Vous n'avez aucune réservation");
         } else {
-            var bookDiff = Date.now() - bookTime;
-            var timeLeft = 20 * 60 - Math.round(bookDiff / 1000);
+            let bookDiff = Date.now() - bookTime;
+            let timeLeft = 20 * 60 - Math.round(bookDiff / 1000);
             if (timeLeft < 0) {
                 $reservations.text("Réservation expirée !");
             } else {
-                var mm = Math.floor(timeLeft / 60);
-                var ss = timeLeft - mm * 60;
+                let mm = Math.floor(timeLeft / 60);
+                let ss = timeLeft - mm * 60;
                 $reservations.text("Un vélo a été réservé à la station " + stationReservee.name + " par " + lastname + " " + firstname + ". La réservation expire dans " + (mm < 10 ? '0' + mm : mm) + " minutes et " + (ss < 10 ? '0' + ss : ss) + " secondes.");
             }
         }

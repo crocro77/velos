@@ -2,7 +2,7 @@
 
 function init() {
 
-  var slider = {
+  let slider = {
     index: 0,
     images: ['img/slider01.jpg', 'img/slider02.jpg', 'img/slider03.jpg', 'img/slider04.jpg', 'img/slider05.jpg', 'img/slider06.jpg', 'img/slider07.jpg', 'img/slider08.jpg'],
     next: function () {
@@ -26,7 +26,7 @@ function init() {
   document.getElementById("previous").onclick = slider.previous;
   document.getElementById("next").onclick = slider.next;
 
-  var sliderInterval = setInterval(function () {
+  let sliderInterval = setInterval(function () {
     slider.next();
   }, 5000);
 
@@ -39,6 +39,9 @@ function init() {
     }
     else if (e.keyCode === 80) {
       clearInterval(sliderInterval);
+    }
+    else if (e.keyCode === 67) {
+      setInterval(sliderInterval);
     }
   });
 }
