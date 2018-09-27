@@ -37,11 +37,19 @@ function init() {
     else if (e.keyCode === 39) {
       slider.next();
     }
-    else if (e.keyCode === 80) {
+    // else if (e.keyCode === 80) {
+    //   clearInterval(sliderInterval);
+    // }
+    // else if (e.keyCode === 67) {
+    //   if (!sliderInterval) slider.next();
+    // }
+  });
+
+  document.addEventListener("mouseover", function (e) {
+    if (e.type == "mouseover") {
       clearInterval(sliderInterval);
-    }
-    else if (e.keyCode === 67) {
-      setInterval(sliderInterval);
+    } else {
+      slider.next();
     }
   });
 }
