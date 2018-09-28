@@ -45,11 +45,11 @@ function init() {
     // }
   });
 
-  document.addEventListener("mouseover", function (e) {
-    if (e.type == "mouseover") {
-      clearInterval(sliderInterval);
-    } else {
-      slider.next();
-    }
+  document.addEventListener("mouseover", function () {
+    clearInterval(sliderInterval);
+  });
+
+  document.addEventListener("mouseleave", function () {
+    return sliderInterval;
   });
 }
