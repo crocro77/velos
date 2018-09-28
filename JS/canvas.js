@@ -62,27 +62,27 @@ let Canvas = {
 
         this.canvas.addEventListener('mouseup', mouseUpEventBind);
 
-        this.canvas.addEventListener('mousemove', function (e) {
-            if (that.paint === true) {
-                that.storeMouseClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
-                that.draw();
-            }
-        });
-
-        // function mouseMoveEvent(e){
-        //     if (this.paint === true){
-        //         this.storeMouseClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
-        //         this.draw();
+        // this.canvas.addEventListener('mousemove', function (e) {
+        //     if (that.paint === true) {
+        //         that.storeMouseClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+        //         that.draw();
         //     }
-        // }
-
-        // let mouseMoveEventBind = mouseMoveEvent.bind(this);
-
-        // this.canvas.addEventListener('mousemove', mouseMoveEventBind);
-
-        // document.getElementById('clearCanvasBtn').addEventListener('click', function () {
-        //     that.clearDraw();
         // });
+
+        function mouseMoveEvent(e){
+            if (this.paint === true){
+                this.storeMouseClick(e.pageX - this.canvas.offsetLeft, e.pageY - this.canvas.offsetTop, true);
+                this.draw();
+            }
+        }
+
+        let mouseMoveEventBind = mouseMoveEvent.bind(this);
+
+        this.canvas.addEventListener('mousemove', mouseMoveEventBind);
+
+        document.getElementById('clearCanvasBtn').addEventListener('click', function () {
+            that.clearDraw();
+        });
 
         function clearCanvasButton(){
             this.clearDraw();

@@ -1,12 +1,12 @@
 'use strict';
 
 $(document).ready(function () {
-    let station = new StationMap();
+    let station = new stationMap();
     station.init();
 });
 
 // la fonction qui appelle la carte et les stations
-function StationMap() {
+function stationMap() {
 
     let map;
     let clickedStation;
