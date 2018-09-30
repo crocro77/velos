@@ -121,7 +121,7 @@ function stationMap() {
     }
 }
 
-function formcheck() {
+function formCheck() {
     // on définit un boolean qu'on initialise à false
     let hasError = false;
     let fields = $(".itemRequired")
