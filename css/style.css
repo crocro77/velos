@@ -85,6 +85,10 @@ footer {
 	margin: 5px auto;
 }
 
+#clearCanvasBtn:hover, #submitCanvasBtn:hover, #cancelCanvasBtn:hover {
+	cursor: pointer;
+}
+
 .bookBtn:hover {
 	color: black;
 	background-color: lightgray;
