@@ -14,7 +14,7 @@ let Canvas = {
     paint: false,
     init: function () {
 
-        let that = this;
+        // let that = this;
         this.canvas = document.getElementById('canvasWindow');
         this.context = this.canvas.getContext('2d');
 
@@ -80,9 +80,9 @@ let Canvas = {
 
         this.canvas.addEventListener('mousemove', mouseMoveEventBind);
 
-        document.getElementById('clearCanvasBtn').addEventListener('click', function () {
-            that.clearDraw();
-        });
+        // document.getElementById('clearCanvasBtn').addEventListener('click', function () {
+        //     that.clearDraw();
+        // });
 
         function clearCanvasButton(){
             this.clearDraw();

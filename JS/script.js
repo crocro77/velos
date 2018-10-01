@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 $(document).ready(function () {
     let station = new stationMap();
@@ -155,12 +155,12 @@ function Reservation() {
     let stationReservee = sessionStorage.getItem('bookInfo') && sessionStorage.getItem('bookInfo') != 'undefined' ? JSON.parse(sessionStorage.getItem('bookInfo')) : {};
 
     // récupération des données du formulaire nom et prénom
-    let lastname = sessionStorage.lastname;
+    let lastname = localStorage.lastname;
     if (lastname == null || typeof (lastname) == "undefined")
         lastname = "";
     document.getElementById("lastname").value = lastname;
 
-    let firstname = sessionStorage.firstname;
+    let firstname = localStorage.firstname;
     if (firstname == null || typeof (firstname) == "undefined")
         firstname = "";
     document.getElementById("firstname").value = firstname;
@@ -174,8 +174,8 @@ function Reservation() {
 
     // la fonction qui refresh le footer
     this.refresh = function () {
-        firstname = sessionStorage.getItem("firstname", "");
-        lastname = sessionStorage.getItem("lastname", "");
+        firstname = localStorage.getItem("firstname", "");
+        lastname = localStorage.getItem("lastname", "");
         let $reservations = $('#reservations');
         let bookTime = sessionStorage.getItem('bookTime');
         if (!bookTime) {
