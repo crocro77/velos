@@ -71,6 +71,14 @@ function stationMap() {
             $('#stationDetails').show();
             $('#instruction').hide();
             $('#velov_station_img').hide();
+            // condition qui masque le bouton réserver un vélo et le formulaire nom-prénom, si la station est fermée ou aucun vélo n'est disponible
+            if (clickedStation.status === 'CLOSED' || clickedStation.available_bikes === 0) {
+                $('#bookForm').hide();
+                $('.bookBtn').hide();
+            } else {
+                $('#bookForm').show();
+                $('.bookBtn').show();
+            }
         });
 
         // ajout des marqueurs sur la map
@@ -80,20 +88,14 @@ function stationMap() {
             .addTo(map);
     }
 
-    // la fonction du bouton reserver un vélo avec condition si station fermée ou zéro vélo disponible
+    // la fonction du bouton reserver un vélo qui ouvre l'encart canvas
     this.attachClickEventToCanvas = function () {
         $('.bookBtn').click(function () {
-            $('bookBtn').hide();
             $('#canvas').show();
-            if (clickedStation.status === 'CLOSED' || clickedStation.available_bikes === 0) {
-                $('#canvas').hide();
-                $('.bookBtn').show();
-                alert("La station est fermée ou aucun vélo de disponible ! Essayez une autre station !");
-            }
         });
     }
 
-    // la fonction du bouton valider 
+    // la fonction du bouton valider avec condition si aucune signature n'est détectée
     this.attachClickEventToSubmit = function () {
         $('#submitCanvasBtn').click(function () {
             if (Canvas.clickX.length > 0) {
@@ -102,7 +104,6 @@ function stationMap() {
                 $('#stationDetails').hide();
                 $('#velov_station_img').show();
                 $('#instruction').show();
-                $('.bookBtn').show();
                 Canvas.clearDraw();
             } else {
                 alert("Merci de signer pour activer votre réservation !");
@@ -110,7 +111,7 @@ function stationMap() {
         });
     }
 
-    // la fonction du bouton annuler
+    // la fonction du bouton annuler qui ferme le canvas et retourne sur la map
     this.attachClickEventToCancel = function () {
         $('#cancelCanvasBtn').click(function () {
             $('#canvas').hide();
@@ -121,6 +122,7 @@ function stationMap() {
     }
 }
 
+// la fonction qui vérifie si le formulaire nom-prénom a été rempli
 function formCheck() {
     // on définit un boolean qu'on initialise à false
     let hasError = false;
@@ -140,7 +142,7 @@ function formCheck() {
                 $('bookBtn').hide();
                 $('#canvas').show();
             });
-        }   
+        }
     });
 
     // en dehors de la boucle et à la fin de la fonction, si hasError est true on affiche l'alert.

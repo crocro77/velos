@@ -21,12 +21,12 @@ function init() {
       }
     },
 
-    loop: () => {
-      if (slider.index + 1 === slider.images.length) {
-        slider.index = 0;
-        document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
-      }
-    },
+    // loop: () => {
+    //   if (slider.index + 1 === slider.images.length) {
+    //     slider.index = 0;
+    //     document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
+    //   }
+    // },
 
     setSliderInterval: function () {
       return setInterval(function () {
