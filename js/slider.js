@@ -10,21 +10,19 @@ function init() {
     next: () => {
       if (slider.index + 1 < slider.images.length) {
         slider.index += 1;
-        document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
       } else {
         slider.index = 0;
-        document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
       }
+      document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
     },
 
     previous: () => {
       if (slider.index - 1 >= 0) {
         slider.index -= 1;
-        document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
       } else {
         slider.index = slider.images.length - 1;
-        document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
       }
+      document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
     },
 
     setSliderInterval: function () {
