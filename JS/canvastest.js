@@ -17,7 +17,7 @@ let Canvas = {
         this.canvas = document.getElementById('canvasWindow');
         this.context = this.canvas.getContext('2d');
 
-        let mouseDownBind =  this.mouseDown(e).bind(this);
+        let mouseDownBind =  this.mouseDown.bind(this);
         this.canvas.addEventListener('mousedown', mouseDownBind);
 
         let mouseUpBind = this.mouseUp.bind(this);
@@ -29,7 +29,7 @@ let Canvas = {
         let mouseMoveEventBind = this.mouseMoveEvent.bind(this);
         this.canvas.addEventListener('mousemove', mouseMoveEventBind);
 
-        let clearCanvasButtonBind = clearCanvasButton.bind(this);
+        let clearCanvasButtonBind = this.clearCanvasButton.bind(this);
         document.getElementById('clearCanvasBtn').addEventListener('click', clearCanvasButtonBind);
 
         document.getElementById('submitCanvasBtn').addEventListener('click', function () {

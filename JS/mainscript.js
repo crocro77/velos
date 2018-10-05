@@ -1,29 +1,90 @@
 "use strict";
 
+// la fonction du slider
+function init() {
+  var sliderInterval;
+
+  // objet slider avec conditions qui permettent de defiler les images en boucles
+  let slider = {
+    index: 0,
+    images: ['img/slider01.jpg', 'img/slider02.jpg', 'img/slider03.jpg', 'img/slider04.jpg', 'img/slider05.jpg', 'img/slider06.jpg', 'img/slider07.jpg', 'img/slider08.jpg'],
+    next: () => {
+      if (slider.index + 1 < slider.images.length) {
+        slider.index += 1;
+      } else {
+        slider.index = 0;
+      }
+      document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
+    },
+
+    previous: () => {
+      if (slider.index - 1 >= 0) {
+        slider.index -= 1;
+      } else {
+        slider.index = slider.images.length - 1;
+      }
+      document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
+    },
+
+    // fonction qui permet l'autoplay du slider avec changement d'images toutes les 5 secondes
+    setSliderInterval: function () {
+      return setInterval(function () {
+        slider.next();
+      }, 5000);
+    }
+  };
+
+  // la fonction qui gere l'interaction de l'utilisateur sur le slider (clics souris, keydowns fleches gauche et droite et les mouseover/mouseleave)
+  function attachSliderEvents() {
+    document.getElementById("previous").onclick = slider.previous;
+    document.getElementById("next").onclick = slider.next;
+    document.getElementById("sliderImage").addEventListener("mouseover", function () {
+      clearInterval(sliderInterval);
+    });
+
+    document.getElementById("sliderImage").addEventListener("mouseleave", function () {
+      sliderInterval = slider.setSliderInterval();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.keyCode === 37) {
+        slider.previous();
+      }
+      else if (e.keyCode === 39) {
+        slider.next();
+      }
+    });
+  }
+
+  sliderInterval = slider.setSliderInterval();
+  attachSliderEvents();
+}
+
+// initialisation de la map et des stations
 $(document).ready(function () {
     let station = new stationMap();
-    let panneauCanvas = new canvasButtons();
     station.init();
-    panneauCanvas.init();
 });
 
 // la fonction qui appelle la carte et les stations
 function stationMap() {
 
-    this.map;
-    this.clickedStation;
-    this.reservation = new Reservation();
+    let map;
+    let clickedStation;
+    let reservation = new Reservation();
 
     this.init = function () {
         this.loadMap();
         this.getStationData();
         $('#stationDetails').hide();
+        this.attachClickEventToCanvas();
+        this.attachClickEventToSubmit();
+        this.attachClickEventToCancel();
     }
 
     // la carte mapbox
     this.loadMap = function () {
         mapboxgl.accessToken = 'pk.eyJ1IjoibnRvbnl5eSIsImEiOiJjamw2enA5eW8waGh0M3BvNXg0NXZieTliIn0.-3QrQ4Nba7o2SOaLyH7mIg';
-        this.map = new mapboxgl.Map({
+        map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/streets-v9',
             center: [4.83927, 45.750945],
@@ -53,11 +114,12 @@ function stationMap() {
         })
             .setLngLat([longitude, latitude])
             .setHTML("<p class='stationName'>" + stationName.toLowerCase() + "</p>")
-            .addTo(this.map);
+            .addTo(map);
+
         let el = document.createElement('div');
         el.className = 'marker';
         el.addEventListener('click', function () {
-            this.clickedStation = data[index];
+            clickedStation = data[index];
             $('#name').html("Nom de la Station : " + data[index].name.toLowerCase());
             $('#address').html("Adresse de la Station : " + data[index].address);
             $('#status').html("Statut de la Station : " + data[index].status);
@@ -71,7 +133,7 @@ function stationMap() {
             $('#instruction').hide();
             $('#velov_station_img').hide();
             // condition qui masque le bouton réserver un vélo et le formulaire nom-prénom, si la station est fermée ou aucun vélo n'est disponible
-            if (this.clickedStation.status === 'CLOSED' || this.clickedStation.available_bikes === 0) {
+            if (clickedStation.status === 'CLOSED' || clickedStation.available_bikes === 0) {
                 $('#bookForm').hide();
                 $('.bookBtn').hide();
             } else {
@@ -84,31 +146,21 @@ function stationMap() {
         new mapboxgl.Marker(el)
             .setLngLat([longitude, latitude])
             .setPopup(popup)
-            .addTo(this.map);
-    }
-}
-
-// la fonction des boutons du canvas
-function canvasButtons() {
-    this.init = function () {
-
-        this.attachClickEventToCanvas();
-        this.attachClickEventToSubmit(this.reservation);
-        this.attachClickEventToCancel();
+            .addTo(map);
     }
 
-    // la fonction du bouton reserver un vélo avec condition si station fermée ou zéro vélo disponible
+    // la fonction du bouton reserver un vélo de la div stationDetails qui ouvre l'encart canvas
     this.attachClickEventToCanvas = function () {
         $('.bookBtn').click(function () {
             $('#canvas').show();
         });
     }
 
-    // la fonction du bouton valider
-    this.attachClickEventToSubmit = function (resa) {
+    // la fonction du bouton valider du div canvas avec condition si aucune signature n'est détectée
+    this.attachClickEventToSubmit = function () {
         $('#submitCanvasBtn').click(function () {
             if (Canvas.clickX.length > 0) {
-                resa.reserver(this.clickedStation);
+                reservation.reserver(clickedStation);
                 $('#canvas').hide();
                 $('#stationDetails').hide();
                 $('#velov_station_img').show();
@@ -120,7 +172,7 @@ function canvasButtons() {
         });
     }
 
-    // la fonction du bouton annuler
+    // la fonction du bouton annuler du div canvas qui ferme le canvas et retourne sur la map
     this.attachClickEventToCancel = function () {
         $('#cancelCanvasBtn').click(function () {
             $('#canvas').hide();
@@ -183,7 +235,7 @@ function Reservation() {
         sessionStorage.setItem('bookInfo', JSON.stringify(station));
     }
 
-    // la fonction qui refresh la reservation dans le footer
+    // la fonction qui refresh le footer
     this.refresh = function () {
         firstname = localStorage.getItem("firstname", "");
         lastname = localStorage.getItem("lastname", "");
@@ -207,3 +259,106 @@ function Reservation() {
     // on lance le refresh chaque seconde
     setInterval(this.refresh, 1000);
 }
+
+// la fonction qui gere le canvas
+window.addEventListener('load', function () {
+    Canvas.init();
+});
+
+// l'objet canvas
+let Canvas = {
+    canvas: null,
+    context: null,
+    line: [],
+    clickDrag: [],
+    clickX: [],
+    clickY: [],
+    paint: false,
+    init: function () {
+
+        this.canvas = document.getElementById('canvasWindow');
+        this.context = this.canvas.getContext('2d');
+
+        let mouseDownBind =  this.mouseDown.bind(this);
+        this.canvas.addEventListener('mousedown', mouseDownBind);
+
+        let mouseUpBind = this.mouseUp.bind(this);
+        this.canvas.addEventListener('mouseup', mouseUpBind);
+
+        let mouseUpEventBind = this.mouseUpEvent.bind(this);
+        this.canvas.addEventListener('mouseup', mouseUpEventBind);
+
+        let mouseMoveEventBind = this.mouseMoveEvent.bind(this);
+        this.canvas.addEventListener('mousemove', mouseMoveEventBind);
+
+        let clearCanvasButtonBind = this.clearCanvasButton.bind(this);
+        document.getElementById('clearCanvasBtn').addEventListener('click', clearCanvasButtonBind);
+
+        document.getElementById('submitCanvasBtn').addEventListener('click', function () {
+        });
+    },
+
+    // les differentes interactions de la souris sur le canvas
+    mouseDown: function(e) {
+        let mouseX = e.pageX - this.offsetLeft;
+        let mouseY = e.pageY - this.offsetTop;
+        this.paint = true;
+        this.storeMouseClick(mouseX, mouseY);
+        this.draw();
+    },
+
+    mouseUp: function() {
+        this.paint = false;
+    },
+
+    mouseUpEvent: function(e) {
+        this.draw(e.pageX, e.pageY);
+    },
+
+    mouseMoveEvent: function(e){
+        if (this.paint === true){
+            this.storeMouseClick(e.pageX - this.canvas.offsetLeft, e.pageY - this.canvas.offsetTop, true);
+            this.draw();
+        }
+    },
+
+    // la fonction du bouton effacer de la div canvas qui permet d'effacer le canvas
+    clearCanvasButton: function (){
+        this.clearDraw();
+    },
+
+    // la fonction qui store lorsque la souris dessine
+    storeMouseClick: function (x, y, dragging) {
+        this.clickX.push(x);
+        this.clickY.push(y);
+        this.clickDrag.push(dragging);
+    },
+
+    // la fonction qui va dessiner les mouvements cliques de la souris sur le canvas
+    draw: function (mouseX, mouseY) {
+        this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+        this.context.strokeStyle = "#000";
+        this.context.lineJoin = "round";
+        this.context.lineWidth = 5;
+
+        for (var i = 0; i < this.clickX.length; i++) {
+            this.context.beginPath();
+            if (this.clickDrag[i] && i) {
+                this.context.moveTo(this.clickX[i - 1], this.clickY[i - 1]);
+            } else {
+                this.context.moveTo(this.clickX[i] - 1, this.clickY[i]);
+            }
+            this.context.lineTo(this.clickX[i], this.clickY[i]);
+            this.context.closePath();
+            this.context.stroke();
+        }
+    },
+
+    // la fonction qui va effacer le canvas
+    clearDraw: function () {
+        this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+        this.clickX = [];
+        this.clickY = [];
+        this.clickDrag = [];
+    }
+};
