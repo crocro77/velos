@@ -11,6 +11,9 @@ function init() {
       if (slider.index + 1 < slider.images.length) {
         slider.index += 1;
         document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
+      } else {
+        slider.index = 0;
+        document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
       }
     },
 
@@ -18,15 +21,15 @@ function init() {
       if (slider.index - 1 >= 0) {
         slider.index -= 1;
         document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
+      } else {
+        slider.index = slider.images.length - 1;
+        document.getElementById('sliderImage').setAttribute('src', slider.images[slider.index]);
       }
     },
 
     setSliderInterval: function () {
       return setInterval(function () {
         slider.next();
-        if (slider.index >= slider.images.length) {
-          slider.index = 0;
-        }
       }, 5000);
     }
   };
