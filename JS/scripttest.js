@@ -68,6 +68,14 @@ function stationMap() {
             $('#stationDetails').show();
             $('#instruction').hide();
             $('#velov_station_img').hide();
+            // condition qui masque le bouton réserver un vélo et le formulaire nom-prénom, si la station est fermée ou aucun vélo n'est disponible
+            if (this.clickedStation.status === 'CLOSED' || this.clickedStation.available_bikes === 0) {
+                $('#bookForm').hide();
+                $('.bookBtn').hide();
+            } else {
+                $('#bookForm').show();
+                $('.bookBtn').show();
+            }
         });
 
         // ajout des marqueurs sur la map
@@ -85,18 +93,14 @@ function canvasButtons() {
         this.attachClickEventToSubmit();
         this.attachClickEventToCancel();
     }
+
     // la fonction du bouton reserver un vélo avec condition si station fermée ou zéro vélo disponible
     this.attachClickEventToCanvas = function () {
         $('.bookBtn').click(function () {
-            $('bookBtn').hide();
             $('#canvas').show();
-            if (this.clickedStation.status === 'CLOSED' || this.clickedStation.available_bikes === 0) {
-                $('#canvas').hide();
-                $('.bookBtn').show();
-                alert("La station est fermée ou aucun vélo de disponible ! Essayez une autre station !");
-            }
         });
     }
+
     // la fonction du bouton valider 
     this.attachClickEventToSubmit = function () {
         $('#submitCanvasBtn').click(function () {
@@ -106,7 +110,6 @@ function canvasButtons() {
                 $('#stationDetails').hide();
                 $('#velov_station_img').show();
                 $('#instruction').show();
-                $('.bookBtn').show();
                 Canvas.clearDraw();
             } else {
                 alert("Merci de signer pour activer votre réservation !");
@@ -176,7 +179,7 @@ function Reservation() {
         sessionStorage.setItem('bookInfo', JSON.stringify(station));
     }
 
-    // la fonction qui refresh le footer
+    // la fonction qui refresh la reservation dans le footer
     this.refresh = function () {
         firstname = localStorage.getItem("firstname", "");
         lastname = localStorage.getItem("lastname", "");
