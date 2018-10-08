@@ -1,28 +1,28 @@
 "use strict";
 
 $(document).ready(function () {
-    this.init = function () {
-        this.attachClickEventToCanvas();
-        this.attachClickEventToSubmit();
-        this.attachClickEventToCancel();
-    }
+    stationMap.init();
+    Reservation.init();
 });
 
-// l'objet et ses fonctions fonction qui appelle la carte et les stations avec leurs marqueurs
+// l'objet stationMap et la fonction qui appelle la carte et les stations
 let stationMap = {
     map: [],
     clickedStation: [],
+    reservation: null,
     init: function () {
-        loadMap();
-        getStationData();
-        setMarker();
+        this.loadMap();
+        this.getStationData();
         $('#stationDetails').hide();
+        this.attachClickEventToCanvas();
+        this.attachClickEventToSubmit();
+        this.attachClickEventToCancel();
     },
 
     // la carte mapbox
     loadMap: function () {
         mapboxgl.accessToken = 'pk.eyJ1IjoibnRvbnl5eSIsImEiOiJjamw2enA5eW8waGh0M3BvNXg0NXZieTliIn0.-3QrQ4Nba7o2SOaLyH7mIg';
-            map = new mapboxgl.Map({
+        this.map = new mapboxgl.Map({
             container: 'map',
             style: 'mapbox://styles/mapbox/streets-v9',
             center: [4.83927, 45.750945],
@@ -52,11 +52,11 @@ let stationMap = {
         })
             .setLngLat([longitude, latitude])
             .setHTML("<p class='stationName'>" + stationName.toLowerCase() + "</p>")
-            .addTo(map);
+            .addTo(this.map);
         let el = document.createElement('div');
         el.className = 'marker';
         el.addEventListener('click', function () {
-            clickedStation = data[index];
+            this.clickedStation = data[index];
             $('#name').html("Nom de la Station : " + data[index].name.toLowerCase());
             $('#address').html("Adresse de la Station : " + data[index].address);
             $('#status').html("Statut de la Station : " + data[index].status);
@@ -70,7 +70,7 @@ let stationMap = {
             $('#instruction').hide();
             $('#velov_station_img').hide();
             // condition qui masque le bouton réserver un vélo et le formulaire nom-prénom, si la station est fermée ou aucun vélo n'est disponible
-            if (clickedStation.status === 'CLOSED' || clickedStation.available_bikes === 0) {
+            if (this.clickedStation.status === 'CLOSED' || this.clickedStation.available_bikes === 0) {
                 $('#bookForm').hide();
                 $('.bookBtn').hide();
             } else {
@@ -83,43 +83,42 @@ let stationMap = {
         new mapboxgl.Marker(el)
             .setLngLat([longitude, latitude])
             .setPopup(popup)
-            .addTo(map);
-    }
-}
+            .addTo(this.map);
+    },
 
-// la fonction du bouton reserver un vélo
-this.attachClickEventToCanvas = function () {
-    $('.bookBtn').click(function () {
-        $('#canvas').show();
-    });
-}
+    // la fonction du bouton reserver un vélo qui ouvre l'encart canvas
+    attachClickEventToCanvas: function () {
+        $('.bookBtn').click(function () {
+            $('#canvas').show();
+        });
+    },
 
-// la fonction du bouton valider
-this.attachClickEventToSubmit = function () {
-    $('#submitCanvasBtn').click(function () {
-        if (Canvas.clickX.length > 0) {
-            reservation.reserver(this.clickedStation);
+    // la fonction du bouton valider avec condition si aucune signature n'est détectée
+    attachClickEventToSubmit: function () {
+        $('#submitCanvasBtn').click(function () {
+            if (Canvas.clickX.length > 0) {
+                this.reservation.reserver(this.clickedStation);
+                $('#canvas').hide();
+                $('#stationDetails').hide();
+                $('#velov_station_img').show();
+                $('#instruction').show();
+                Canvas.clearDraw();
+            } else {
+                alert("Merci de signer pour activer votre réservation !");
+            }
+        });
+    },
+
+    // la fonction du bouton annuler qui ferme le canvas et retourne sur la map
+    attachClickEventToCancel: function () {
+        $('#cancelCanvasBtn').click(function () {
             $('#canvas').hide();
             $('#stationDetails').hide();
-            $('#velov_station_img').show();
             $('#instruction').show();
-            Canvas.clearDraw();
-        } else {
-            alert("Merci de signer pour activer votre réservation !");
-        }
-    });
+            $('#velov_station_img').show();
+        });
+    },
 }
-
-// la fonction du bouton annuler
-this.attachClickEventToCancel = function () {
-    $('#cancelCanvasBtn').click(function () {
-        $('#canvas').hide();
-        $('#stationDetails').hide();
-        $('#instruction').show();
-        $('#velov_station_img').show();
-    });
-}
-
 
 // la fonction qui vérifie si le formulaire nom-prénom a été rempli
 function formCheck() {
@@ -150,34 +149,49 @@ function formCheck() {
     }
 }
 
-// l'objet réservation et sa fonction qui gère la réservation avec le storage et le timer
+// l'objet réservation et la fonction qui gère la réservation avec le storage et le timer
 let Reservation = {
-    // au chargement de la page on reprend la reservation du session storage
-    stationReservee: sessionStorage.getItem('bookInfo') && sessionStorage.getItem('bookInfo') != 'undefined' ? JSON.parse(sessionStorage.getItem('bookInfo')) : {},
-    // récupération des données du formulaire nom et prénom
-    lastname: localStorage.lastname,
-    // que faire de ca ??
-    // if (lastname = null || typeof (lastname) == "undefined"),
-    //     lastname = "",
-    // document.getElementById("lastname").value = lastname,
+    stationReservee: null,
+    lastname: null,
+    firstname: null,
+    init: function () {
+        this.stationReservee();
+        this.lastname();
+        this.firstname();
+        this.reserver();
+        this.refresh();
+    },
 
-    firstname: localStorage.firstname,
-    // que faire de ca ??
-    // if (firstname = null || typeof (firstname) == "undefined")
-    //     firstname = "",
-    // document.getElementById("firstname").value = firstname,
+    // au chargement de la page on reprend la reservation du session storage
+    stationReservee: function() {
+        this.stationReservee = sessionStorage.getItem('bookInfo') && sessionStorage.getItem('bookInfo') != 'undefined' ? JSON.parse(sessionStorage.getItem('bookInfo')) : {};
+    },
+
+    // récupération des données du formulaire nom et prénom
+    lastname: function() {
+        this.lastname == localStorage.lastname;
+        if (lastname == null || typeof (lastname) == "undefined")
+            lastname = "";
+        document.getElementById("lastname").value = lastname;
+    },
+    firstname: function() {
+        this.firstname == localStorage.lastname;
+        if (firstname == null || typeof (firstname) == "undefined")
+            firstname = "";
+        document.getElementById("firstname").value = firstname;   
+    },
 
     // la fonction appelee pour reserver un velo sur une station
     reserver: function (station) {
-        stationReservee = station;
+        this.stationReservee = station;
         sessionStorage.setItem('bookTime', Date.now());
         sessionStorage.setItem('bookInfo', JSON.stringify(station));
     },
 
-    // la fonction qui refresh la reservation dans le footer
+    // la fonction qui refresh le footer
     refresh: function () {
-        firstname = localStorage.getItem("firstname", "");
-        lastname = localStorage.getItem("lastname", "");
+        this.firstname = localStorage.getItem("firstname", "");
+        this.lastname = localStorage.getItem("lastname", "");
         let $reservations = $('#reservations');
         let bookTime = sessionStorage.getItem('bookTime');
         if (!bookTime) {
@@ -190,7 +204,7 @@ let Reservation = {
             } else {
                 let mm = Math.floor(timeLeft / 60);
                 let ss = timeLeft - mm * 60;
-                $reservations.text("Un vélo a été réservé à la station " + stationReservee.name + " par " + lastname + " " + firstname + ". La réservation expire dans " + (mm < 10 ? '0' + mm : mm) + " minutes et " + (ss < 10 ? '0' + ss : ss) + " secondes.");
+                $reservations.text("Un vélo a été réservé à la station " + this.stationReservee.name + " par " + this.lastname + " " + this.firstname + ". La réservation expire dans " + (mm < 10 ? '0' + mm : mm) + " minutes et " + (ss < 10 ? '0' + ss : ss) + " secondes.");
             }
         }
     },
@@ -198,5 +212,5 @@ let Reservation = {
     // on lance le refresh chaque seconde
     setInterval: function () {
         (refresh, 1000)
-    }
+    },
 }
