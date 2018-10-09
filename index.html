@@ -22,16 +22,6 @@
   </header>
 
   <h1 id="errorMsg">Erreur : La chaîne a déraillée ! Revenez plus tard ou venez pédaler avec nous ;)</h1>
-
-  <div id="canvas">
-    <h1 class="signature">Signez pour réserver votre Vélo'v</h1>
-    <canvas id="canvasWindow" width="700" height="250"></canvas>
-    <div class="containerCanvasBtns">
-      <button id="clearCanvasBtn">Effacer</button>
-      <button id="submitCanvasBtn">Valider</button>
-      <button id="cancelCanvasBtn">Annuler</button>
-    </div>
-  </div>
   
   <div class="container">
     <div id="map"></div>
@@ -61,6 +51,16 @@
     </div>
   </div>
 
+  <div id="canvas">
+    <h1 class="signature">Signez pour réserver votre Vélo'v</h1>
+    <canvas id="canvasWindow" width="700" height="250"></canvas>
+    <div class="containerCanvasBtns">
+      <button id="clearCanvasBtn">Effacer</button>
+      <button id="submitCanvasBtn" onclick="attachClickEventToSubmit()">Valider</button>
+      <button id="cancelCanvasBtn" onclick="attachClickEventToCancel()">Annuler</button>
+    </div>
+  </div>
+
   <footer>
     <div id="reservations"></div>
   </footer>
@@ -68,11 +68,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
   <script src="js/slider.js"></script>
-  <!-- <script src="js/script.js"></script>
-  <script src="js/canvas.js"></script> -->
-  <script src="js/scripttest2.js"></script>
-  <script src="js/canvastest.js"></script>
-  <!-- <script src="js/mainscript.js"></script> -->
+  <script src="js/script.js"></script>
+  <script src="js/canvas.js"></script>
 
 </body>
 
