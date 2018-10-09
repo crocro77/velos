@@ -1,9 +1,11 @@
 "use strict";
 
 window.addEventListener('load', function () {
+    // on initialise les méthodes qui sont dans la fonction init l'objet Cabvas
     Canvas.init();
 });
 
+// objet Canvas
 let Canvas = {
     canvas: null,
     context: null,
@@ -17,7 +19,7 @@ let Canvas = {
         this.canvas = document.getElementById('canvasWindow');
         this.context = this.canvas.getContext('2d');
 
-        let mouseDownBind =  this.mouseDown.bind(this);
+        let mouseDownBind = this.mouseDown.bind(this);
         this.canvas.addEventListener('mousedown', mouseDownBind);
 
         let mouseUpBind = this.mouseUp.bind(this);
@@ -36,6 +38,7 @@ let Canvas = {
         });
     },
 
+    // les fonctions qui gèrent les différentes interactions de la souris sur le canvas
     mouseDown: function(e) {
         let mouseX = e.pageX - this.offsetLeft;
         let mouseY = e.pageY - this.offsetTop;
@@ -59,16 +62,19 @@ let Canvas = {
         }
     },
 
+    // la fonction du bouton Effacer du panneau du canvas
     clearCanvasButton: function (){
         this.clearDraw();
     },
 
+    // la fonction qui ajoute les clic et les déplacements de la souris sur le canvas
     storeMouseClick: function (x, y, dragging) {
         this.clickX.push(x);
         this.clickY.push(y);
         this.clickDrag.push(dragging);
     },
 
+    // la fonction qui permet de 'dessiner' sur le canvas
     draw: function (mouseX, mouseY) {
         this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
         this.context.strokeStyle = "#000";
@@ -88,6 +94,7 @@ let Canvas = {
         }
     },
 
+    // la fonction qui efface le canvas
     clearDraw: function () {
         this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height); // Clears the canvas
         this.clickX = [];
