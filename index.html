@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body onload="init();">
+<body>
   <header>
     <h1>Vélo'V</h1>
     <div id="slider">
@@ -18,7 +18,7 @@
       <img id="sliderImage" src="img/slider01.jpg">
       <a id="next"><img src="img/keyboard_key_right.png"></a>
     </div>
-    <p id="sliderInstruction">Passez la souris sur le diaporama pour le mettre en pause, ressortez pour continuer la lecture</p>
+    <p>Passez la souris sur le diaporama pour le mettre en pause, ressortez pour continuer la lecture</p>
   </header>
 
   <h1 id="errorMsg">Erreur : La chaîne a déraillée ! Revenez plus tard ou venez pédaler avec nous ;)</h1>
@@ -46,18 +46,18 @@
             <br>
           </div>
         </form>
-        <button class="bookBtn" onclick="formCheck(); return false">Réserver un vélo</button>
+        <button class="bookBtn">Réserver un vélo</button>
       </div>
     </div>
   </div>
 
   <div id="canvas">
     <h1 class="signature">Signez pour réserver votre Vélo'v</h1>
-    <canvas id="canvasWindow"></canvas>
+    <canvas id="canvasWindow" width="700" height="250"></canvas>
     <div class="containerCanvasBtns">
       <button id="clearCanvasBtn">Effacer</button>
-      <button id="submitCanvasBtn" onclick="attachClickEventToSubmit()">Valider</button>
-      <button id="cancelCanvasBtn" onclick="attachClickEventToCancel()">Annuler</button>
+      <button id="submitCanvasBtn">Valider</button>
+      <button id="cancelCanvasBtn">Annuler</button>
     </div>
   </div>
 

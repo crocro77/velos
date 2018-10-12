@@ -1,7 +1,7 @@
 "use strict";
 
 window.addEventListener('load', function () {
-    // on initialise les méthodes qui sont dans la fonction init l'objet Canvas
+    // on initialise les méthodes qui sont dans la fonction init l'objet Cabvas
     Canvas.init();
 });
 

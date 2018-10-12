@@ -16,6 +16,9 @@ let stationMap = {
         this.getStationData();
         $('#stationDetails').hide();
         this.attachClickEventToCanvas();
+        this.attachClickEventToSubmit();
+        this.attachClickEventToCancel();
+        this.formCheck();
     },
 
     // la carte mapbox
@@ -93,103 +96,107 @@ let stationMap = {
             $('#canvas').show();
         });
     },
-}
 
-// la fonction du bouton valider avec condition si aucune signature n'est détectée
-function attachClickEventToSubmit() {
-    if (Canvas.clickX.length > 0) {
-        Reservation.reserver(sessionStorage.getItem('selectedStation'));
-        $('#canvas').hide();
-        $('#stationDetails').hide();
-        $('#velov_station_img').show();
-        $('#instruction').show();
-        Canvas.clearDraw();
-    } else {
-        alert("Merci de signer pour activer votre réservation !");
-    }
-}
-
-// la fonction du bouton annuler qui ferme le canvas et retourne sur la map
-function attachClickEventToCancel() {
-    $('#canvas').hide();
-    $('#stationDetails').hide();
-    $('#instruction').show();
-    $('#velov_station_img').show();
-    Canvas.clearDraw();
-}
-
-// la fonction qui vérifie si le formulaire nom-prénom a été rempli
-function formCheck() {
-    // on définit un boolean qu'on initialise à false
-    let hasError = false;
-    let fields = $(".itemRequired")
-        .find("input").serializeArray();
-
-    $.each(fields, function (i, field) {
-        if (!field.value) {
-            // on boucle sur les champs du formulaire. Si un ou plusieurs champs sont vides, on passe le boolean à true
-            hasError = true;
-            $('.bookBtn').click(function () {
+    attachClickEventToSubmit: function () {
+        $('#submitCanvasBtn').click(function () {
+            if (Canvas.clickX.length > 0) {
+                Reservation.reserver(sessionStorage.getItem('selectedStation'));
                 $('#canvas').hide();
-                $('.bookBtn').show();
-            });
-        } else {
-            $('.bookBtn').click(function () {
-                $('.bookBtn').hide();
-                $('#canvas').show();
-            });
-            // on stocke les nom et prénom qui sont renseignés
-            localStorage.setItem(field.name, field.value);
-        }
-    });
+                $('#stationDetails').hide();
+                $('#velov_station_img').show();
+                $('#instruction').show();
+                Canvas.clearDraw();
+            } else {
+                alert("Merci de signer pour activer votre réservation !");
+            }
+        });
+    },
 
-    // en dehors de la boucle et à la fin de la fonction, si hasError est true on affiche l'alert.
-    if (hasError) {
-        alert("Veuillez saisir vos nom et/ou prénom !");
+    attachClickEventToCancel: function () {
+        $('#cancelCanvasBtn').click(function () {
+            $('#canvas').hide();
+            $('#stationDetails').hide();
+            $('#instruction').show();
+            $('#velov_station_img').show();
+            Canvas.clearDraw();
+        });
+    },
+
+    // la fonction qui vérifie si le formulaire nom-prénom a été rempli
+    formCheck: function () {
+        $('.bookBtn').click(function () {
+            // on définit un boolean qu'on initialise à false
+            let hasError = false;
+            let fields = $(".itemRequired")
+                .find("input").serializeArray();
+
+            $.each(fields, function (i, field) {
+                if (!field.value) {
+                    // on boucle sur les champs du formulaire. Si un ou plusieurs champs sont vides, on passe le boolean à true
+                    hasError = true;
+                    $('.bookBtn').click(function () {
+                        $('#canvas').hide();
+                        $('.bookBtn').show();
+                    });
+                } else {
+                    $('.bookBtn').click(function () {
+                        $('.bookBtn').hide();
+                        $('#canvas').show();
+                    });
+                    // on stocke les nom et prénom qui sont renseignés
+                    localStorage.setItem(field.name, field.value);
+                }
+            });
+
+            // en dehors de la boucle et à la fin de la fonction, si hasError est true on affiche l'alert.
+            if (hasError) {
+                alert("Veuillez saisir vos nom et/ou prénom !");
+            }
+        });
     }
 }
 
 // l'objet réservation et les fonction qui gèrent la réservation avec les différents storages (nom, prénom, station, heure)
 let Reservation = {
-    stationReservee: null,
-    lastname: null,
-    firstname: null,
-    init: function () {
-        this.stationReservee();
-        setInterval(this.refresh, 1000);
-    },
+                stationReservee: null,
+                lastname: null,
+                firstname: null,
+                init: function () {
+                    this.stationReservee();
+                    setInterval(this.refresh, 1000);
+                },
 
-    // au chargement de la page on reprend la reservation du session storage
-    stationReservee: function () {
-        this.stationReservee = sessionStorage.getItem('bookInfo') && sessionStorage.getItem('bookInfo') != 'undefined' ? sessionStorage.getItem('bookInfo') : {};
-    },
+                // au chargement de la page on reprend la reservation du session storage
+                stationReservee: function () {
+                    this.stationReservee = sessionStorage.getItem('bookInfo') && sessionStorage.getItem('bookInfo') != 'undefined' ? sessionStorage.getItem('bookInfo') : {};
+                },
 
-    // la fonction appelee pour reserver un velo sur une station
-    reserver: function (station) {
-        this.stationReservee = station;
-        sessionStorage.setItem('bookTime', Date.now());
-        sessionStorage.setItem('bookInfo', station);
-    },
+                // la fonction appelee pour reserver un velo sur une station
+                reserver: function (station) {
+                    this.stationReservee = station;
+                    sessionStorage.setItem('bookTime', Date.now());
+                    sessionStorage.setItem('bookInfo', station);
+                },
 
-    // la fonction qui refresh le footer
-    refresh: function () {
-        this.firstname = localStorage.getItem("firstname", "");
-        this.lastname = localStorage.getItem("lastname", "");
-        this.stationReservee = sessionStorage.getItem("bookInfo", "");
-        let $reservations = $('#reservations');
-        let bookTime = sessionStorage.getItem('bookTime');
-        if (!bookTime) {
-            $reservations.text("Vous n'avez aucune réservation");
-        } else {
-            let bookDiff = Date.now() - bookTime;
-            let timeLeft = 20 * 60 - Math.round(bookDiff / 1000);
-            if (timeLeft < 0) {
-                $reservations.text("Réservation expirée !");
-            } else {
-                let mm = Math.floor(timeLeft / 60);
-                let ss = timeLeft - mm * 60;
-                $reservations.text("Un vélo a été réservé à la station " + this.stationReservee + " par " + this.lastname + " " + this.firstname + ". La réservation expire dans " + (mm < 10 ? '0' + mm : mm) + " minutes et " + (ss < 10 ? '0' + ss : ss) + " secondes.");
+                // la fonction qui refresh le footer
+                refresh: function () {
+                    this.firstname = localStorage.getItem("firstname", "");
+                    this.lastname = localStorage.getItem("lastname", "");
+                    this.stationReservee = sessionStorage.getItem("bookInfo", "");
+                    let $reservations = $('#reservations');
+                    let bookTime = sessionStorage.getItem('bookTime');
+                    if (!bookTime) {
+                        $reservations.text("Vous n'avez aucune réservation");
+                    } else {
+                        let bookDiff = Date.now() - bookTime;
+                        let timeLeft = 20 * 60 - Math.round(bookDiff / 1000);
+                        if (timeLeft < 0) {
+                            $reservations.text("Réservation expirée !");
+                        } else {
+                            let mm = Math.floor(timeLeft / 60);
+                            let ss = timeLeft - mm * 60;
+                            $reservations.text("Un vélo a été réservé à la station " + this.stationReservee + " par " + this.lastname + " " + this.firstname + ". La réservation expire dans " + (mm < 10 ? '0' + mm : mm) + " minutes et " + (ss < 10 ? '0' + ss : ss) + " secondes.");
+                        }
+                    }
+                },
             }
-        }
-    },
-}
