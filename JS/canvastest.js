@@ -15,7 +15,6 @@ let Canvas = {
     clickY: [],
     paint: false,
     init: function () {
-
         this.canvas = document.getElementById('canvasWindow');
         this.context = this.canvas.getContext('2d');
 
@@ -37,45 +36,20 @@ let Canvas = {
         document.getElementById('submitCanvasBtn').addEventListener('click', function () {
         });
 
-        // TEST TOUCH //
-        // configurations des événèments touch
-        this.canvas.addEventListener("touchstart", function (e) {
-            var touch = e.touches[0];
-            var mouseEvent = new MouseEvent("mousedown", {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            canvas.dispatchEvent(mouseEvent);
-        }, false),
+        let touchStartBind = this.touchStart.bind(this);
+        this.canvas.addEventListener('touchstart', touchStartBind);
 
-        this.canvas.addEventListener("touchmove", function (e) {
-            var touch = e.touches[0];
-            var mouseEvent = new MouseEvent("mousemove", {
-                clientX: touch.clientX,
-                clientY: touch.clientY
-            });
-            canvas.dispatchEvent(mouseEvent);
-        }, false),
+        let touchMoveBind = this.touchMove.bind(this);
+        this.canvas.addEventListener("touchmove", touchMoveBind);
 
-        this.canvas.addEventListener("touchend", function (e) {
-            var mouseEvent = new MouseEvent("mouseup", {});
-            canvas.dispatchEvent(mouseEvent);
-        }, false),
-
-        // la fonction qui obtient la position du toucher
-        function getMousePos(canvasDom, touchEvent) {
-            var rect = canvasDom.getBoundingClientRect();
-            return {
-                x: touchEvent.touches[0].clientX - rect.left,
-                y: touchEvent.touches[0].clientY - rect.top
-            };
-        },
+        let touchEndBind = this.touchEnd.bind(this);
+        this.canvas.addEventListener("touchend", touchEndBind);
 
         // empêche le scrolling quand on touche le canvas
         document.body.addEventListener("touchmove", function (e) {
             if (e.target == canvas) {
-                e.preventDefault();
-                }
+            e.preventDefault();
+            }   
         }, false);
     },
 
@@ -103,7 +77,29 @@ let Canvas = {
         }
     },
 
-    // la fonction du bouton Effacer du panneau du canvas
+    touchStart: function (e) {
+        var touch = e.touches[0];
+        var mouseEvent = new MouseEvent("mousedown", {
+            clickX: touch.clickX,
+            clickY: touch.clickY
+        });
+        canvas.dispatchEvent(mouseEvent);
+    },
+
+    touchMove: function (e) {
+        var touch = e.touches[0];
+        var mouseEvent = new MouseEvent("mousemove", {
+            clickX: touch.clickX,
+            clickY: touch.clickY
+        });
+        canvas.dispatchEvent(mouseEvent);
+    },
+
+    touchEnd: function (e) {
+        var mouseEvent = new MouseEvent("mouseup", {});
+        canvas.dispatchEvent(mouseEvent);
+    },
+
     clearCanvasButton: function () {
         this.clearDraw();
     },
@@ -113,6 +109,15 @@ let Canvas = {
         this.clickX.push(x);
         this.clickY.push(y);
         this.clickDrag.push(dragging);
+    },
+
+    // la fonction qui obtient la position du tactile
+    getMousePos: function (canvasDom, touchEvent) {
+        var rect = canvasDom.getBoundingClientRect();
+            return {
+                x: touchEvent.touches[0].clickX - rect.left,
+                y: touchEvent.touches[0].clickY - rect.top
+        };
     },
 
     // la fonction qui permet de 'dessiner' sur le canvas
@@ -143,4 +148,3 @@ let Canvas = {
         this.clickDrag = [];
     },
 }
-
