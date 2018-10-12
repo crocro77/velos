@@ -36,10 +36,51 @@ let Canvas = {
 
         document.getElementById('submitCanvasBtn').addEventListener('click', function () {
         });
+
+        // TEST TOUCH //
+        // configurations des événèments touch
+        this.canvas.addEventListener("touchstart", function (e) {
+            var touch = e.touches[0];
+            var mouseEvent = new MouseEvent("mousedown", {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }, false),
+
+        this.canvas.addEventListener("touchmove", function (e) {
+            var touch = e.touches[0];
+            var mouseEvent = new MouseEvent("mousemove", {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }, false),
+
+        this.canvas.addEventListener("touchend", function (e) {
+            var mouseEvent = new MouseEvent("mouseup", {});
+            canvas.dispatchEvent(mouseEvent);
+        }, false),
+
+        // la fonction qui obtient la position du toucher
+        function getMousePos(canvasDom, touchEvent) {
+            var rect = canvasDom.getBoundingClientRect();
+            return {
+                x: touchEvent.touches[0].clientX - rect.left,
+                y: touchEvent.touches[0].clientY - rect.top
+            };
+        },
+
+        // empêche le scrolling quand on touche le canvas
+        document.body.addEventListener("touchmove", function (e) {
+            if (e.target == canvas) {
+                e.preventDefault();
+                }
+        }, false);
     },
 
     // les fonctions qui gèrent les différentes interactions de la souris sur le canvas
-    mouseDown: function(e) {
+    mouseDown: function (e) {
         let mouseX = e.pageX - this.offsetLeft;
         let mouseY = e.pageY - this.offsetTop;
         this.paint = true;
@@ -47,23 +88,23 @@ let Canvas = {
         this.draw();
     },
 
-    mouseUp: function() {
+    mouseUp: function () {
         this.paint = false;
     },
 
-    mouseUpEvent: function(e) {
+    mouseUpEvent: function (e) {
         this.draw(e.pageX, e.pageY);
     },
 
-    mouseMoveEvent: function(e){
-        if (this.paint === true){
+    mouseMoveEvent: function (e) {
+        if (this.paint === true) {
             this.storeMouseClick(e.pageX - this.canvas.offsetLeft, e.pageY - this.canvas.offsetTop, true);
             this.draw();
         }
     },
 
     // la fonction du bouton Effacer du panneau du canvas
-    clearCanvasButton: function (){
+    clearCanvasButton: function () {
         this.clearDraw();
     },
 
@@ -100,5 +141,6 @@ let Canvas = {
         this.clickX = [];
         this.clickY = [];
         this.clickDrag = [];
-    }
-};
+    },
+}
+
