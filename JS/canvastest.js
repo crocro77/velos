@@ -77,6 +77,7 @@ let Canvas = {
         }
     },
 
+    // les fonctions qui gèrent les différentes intéractions tactiles sur le canvas
     touchStart: function (e) {
         var touch = e.touches[0];
         var mouseEvent = new MouseEvent("mousedown", {
@@ -100,6 +101,7 @@ let Canvas = {
         canvas.dispatchEvent(mouseEvent);
     },
 
+    // la fonction pour effacer le canvas avec le bouton effacer
     clearCanvasButton: function () {
         this.clearDraw();
     },
