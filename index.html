@@ -7,7 +7,11 @@
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
   <link rel="icon" type="image/x-icon" href="img/favicon.ico">
   <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.css' rel='stylesheet' />
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css">  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
+  <script src="js/slider.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/canvastest.js"></script>
 </head>
 
 <body>
@@ -37,13 +41,13 @@
         <div id="bike_stands"></div>
         <div id="available_bikes"></div>
         <div id="available_bike_stands"></div>
-        <form id="bookForm" method="get">
+        <form id="bookFormulaire" method="get">
           <div class="itemRequired">
-            <label for="bookForm" id="bookForm"></label>
+            <label for="lastname"></label>
             Nom : <input id="lastname" type="text" name="lastname">
             <br>
+            <label for="firstname"></label>
             Prénom : <input id="firstname" type="text" name="firstname">
-            <br>
           </div>
         </form>
         <button class="bookBtn">Réserver un vélo</button>
@@ -64,12 +68,6 @@
   <footer>
     <div id="reservations"></div>
   </footer>
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.46.0/mapbox-gl.js'></script>
-  <script src="js/slider.js"></script>
-  <script src="js/script.js"></script>
-  <script src="js/canvastest.js"></script>
 
 </body>
 

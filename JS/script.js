@@ -75,10 +75,10 @@ let stationMap = {
             $('#velov_station_img').hide();
             // condition qui masque le bouton réserver un vélo et le formulaire nom-prénom, si la station est fermée ou aucun vélo n'est disponible
             if (this.clickedStation.status === 'CLOSED' || this.clickedStation.available_bikes === 0) {
-                $('#bookForm').hide();
+                $('#bookFormulaire').hide();
                 $('.bookBtn').hide();
             } else {
-                $('#bookForm').show();
+                $('#bookFormulaire').show();
                 $('.bookBtn').show();
             }
         });
@@ -97,6 +97,7 @@ let stationMap = {
         });
     },
 
+    // la fonction du bouton valider du canvas avec condition si une signature a été dessiné
     attachClickEventToSubmit: function () {
         $('#submitCanvasBtn').click(function () {
             if (Canvas.clickX.length > 0) {
@@ -112,6 +113,7 @@ let stationMap = {
         });
     },
 
+    // la fonction du bouton annuler du canvas qui ferme le canvas
     attachClickEventToCancel: function () {
         $('#cancelCanvasBtn').click(function () {
             $('#canvas').hide();
@@ -158,45 +160,45 @@ let stationMap = {
 
 // l'objet réservation et les fonction qui gèrent la réservation avec les différents storages (nom, prénom, station, heure)
 let Reservation = {
-                stationReservee: null,
-                lastname: null,
-                firstname: null,
-                init: function () {
-                    this.stationReservee();
-                    setInterval(this.refresh, 1000);
-                },
+    stationReservee: null,
+    lastname: null,
+    firstname: null,
+    init: function () {
+        this.stationReservee();
+        setInterval(this.refresh, 1000);
+    },
 
-                // au chargement de la page on reprend la reservation du session storage
-                stationReservee: function () {
-                    this.stationReservee = sessionStorage.getItem('bookInfo') && sessionStorage.getItem('bookInfo') != 'undefined' ? sessionStorage.getItem('bookInfo') : {};
-                },
+    // au chargement de la page on reprend la reservation du session storage
+    stationReservee: function () {
+        this.stationReservee = sessionStorage.getItem('bookInfo') && sessionStorage.getItem('bookInfo') != 'undefined' ? sessionStorage.getItem('bookInfo') : {};
+    },
 
-                // la fonction appelee pour reserver un velo sur une station
-                reserver: function (station) {
-                    this.stationReservee = station;
-                    sessionStorage.setItem('bookTime', Date.now());
-                    sessionStorage.setItem('bookInfo', station);
-                },
+    // la fonction appelee pour reserver un velo sur une station
+    reserver: function (station) {
+        this.stationReservee = station;
+        sessionStorage.setItem('bookTime', Date.now());
+        sessionStorage.setItem('bookInfo', station);
+    },
 
-                // la fonction qui refresh le footer
-                refresh: function () {
-                    this.firstname = localStorage.getItem("firstname", "");
-                    this.lastname = localStorage.getItem("lastname", "");
-                    this.stationReservee = sessionStorage.getItem("bookInfo", "");
-                    let $reservations = $('#reservations');
-                    let bookTime = sessionStorage.getItem('bookTime');
-                    if (!bookTime) {
-                        $reservations.text("Vous n'avez aucune réservation");
-                    } else {
-                        let bookDiff = Date.now() - bookTime;
-                        let timeLeft = 20 * 60 - Math.round(bookDiff / 1000);
-                        if (timeLeft < 0) {
-                            $reservations.text("Réservation expirée !");
-                        } else {
-                            let mm = Math.floor(timeLeft / 60);
-                            let ss = timeLeft - mm * 60;
-                            $reservations.text("Un vélo a été réservé à la station " + this.stationReservee + " par " + this.lastname + " " + this.firstname + ". La réservation expire dans " + (mm < 10 ? '0' + mm : mm) + " minutes et " + (ss < 10 ? '0' + ss : ss) + " secondes.");
-                        }
-                    }
-                },
+    // la fonction qui refresh le footer
+    refresh: function () {
+        this.firstname = localStorage.getItem("firstname", "");
+        this.lastname = localStorage.getItem("lastname", "");
+        this.stationReservee = sessionStorage.getItem("bookInfo", "");
+        let $reservations = $('#reservations');
+        let bookTime = sessionStorage.getItem('bookTime');
+        if (!bookTime) {
+            $reservations.text("Vous n'avez aucune réservation");
+        } else {
+            let bookDiff = Date.now() - bookTime;
+            let timeLeft = 20 * 60 - Math.round(bookDiff / 1000);
+            if (timeLeft < 0) {
+                $reservations.text("Réservation expirée !");
+            } else {
+                let mm = Math.floor(timeLeft / 60);
+                let ss = timeLeft - mm * 60;
+                $reservations.text("Un vélo a été réservé à la station " + this.stationReservee + " par " + this.lastname + " " + this.firstname + ". La réservation expire dans " + (mm < 10 ? '0' + mm : mm) + " minutes et " + (ss < 10 ? '0' + ss : ss) + " secondes.");
             }
+        }
+    },
+}

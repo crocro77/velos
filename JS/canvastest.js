@@ -45,12 +45,6 @@ let Canvas = {
         let touchEndBind = this.touchEnd.bind(this);
         this.canvas.addEventListener("touchend", touchEndBind);
 
-        // empêche le scrolling quand on touche le canvas
-        document.body.addEventListener("touchmove", function (e) {
-            if (e.target == canvas) {
-            e.preventDefault();
-            }   
-        }, false);
     },
 
     // les fonctions qui gèrent les différentes interactions de la souris sur le canvas
@@ -79,26 +73,31 @@ let Canvas = {
 
     // les fonctions qui gèrent les différentes intéractions tactiles sur le canvas
     touchStart: function (e) {
+        e.preventDefault();
         var touch = e.touches[0];
         var mouseEvent = new MouseEvent("mousedown", {
             clickX: touch.clickX,
             clickY: touch.clickY
         });
-        canvas.dispatchEvent(mouseEvent);
+        this.canvas.dispatchEvent(mouseEvent);
     },
 
     touchMove: function (e) {
+        e.preventDefault();
         var touch = e.touches[0];
         var mouseEvent = new MouseEvent("mousemove", {
+            screenX: touch.screenX,
+            screenY: touch.screenY,
             clickX: touch.clickX,
             clickY: touch.clickY
         });
-        canvas.dispatchEvent(mouseEvent);
+        this.canvas.dispatchEvent(mouseEvent);
     },
 
     touchEnd: function (e) {
+        e.preventDefault();
         var mouseEvent = new MouseEvent("mouseup", {});
-        canvas.dispatchEvent(mouseEvent);
+        this.canvas.dispatchEvent(mouseEvent);
     },
 
     // la fonction pour effacer le canvas avec le bouton effacer
@@ -114,11 +113,11 @@ let Canvas = {
     },
 
     // la fonction qui obtient la position du tactile
-    getMousePos: function (canvasDom, touchEvent) {
-        var rect = canvasDom.getBoundingClientRect();
-            return {
-                x: touchEvent.touches[0].clickX - rect.left,
-                y: touchEvent.touches[0].clickY - rect.top
+    getMousePos: function (touchEvent) {
+        this.storeMouseClick();
+        return {
+            x: touchEvent.touches[0].clickX - this.offsetLeft,
+            y: touchEvent.touches[0].clickY - this.offsettop
         };
     },
 
@@ -127,7 +126,7 @@ let Canvas = {
         this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
         this.context.strokeStyle = "#000";
         this.context.lineJoin = "round";
-        this.context.lineWidth = 5;
+        this.context.lineWidth = 3;
 
         for (var i = 0; i < this.clickX.length; i++) {
             this.context.beginPath();
