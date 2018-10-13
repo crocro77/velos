@@ -15,9 +15,11 @@ let Canvas = {
     clickY: [],
     paint: false,
     init: function () {
-
         this.canvas = document.getElementById('canvasWindow');
         this.context = this.canvas.getContext('2d');
+        this.context.strokeStyle = "#000";
+        this.context.lineJoin = "round";
+        this.context.lineWidth = 3;
 
         let mouseDownBind = this.mouseDown.bind(this);
         this.canvas.addEventListener('mousedown', mouseDownBind);
@@ -36,10 +38,19 @@ let Canvas = {
 
         document.getElementById('submitCanvasBtn').addEventListener('click', function () {
         });
+
+        let touchStartBind = this.touchStart.bind(this);
+        this.canvas.addEventListener('touchstart', touchStartBind);
+
+        let touchMoveBind = this.touchMove.bind(this);
+        this.canvas.addEventListener("touchmove", touchMoveBind);
+
+        let touchEndBind = this.touchEnd.bind(this);
+        this.canvas.addEventListener("touchend", touchEndBind);
     },
 
     // les fonctions qui gèrent les différentes interactions de la souris sur le canvas
-    mouseDown: function(e) {
+    mouseDown: function (e) {
         let mouseX = e.pageX - this.offsetLeft;
         let mouseY = e.pageY - this.offsetTop;
         this.paint = true;
@@ -47,23 +58,44 @@ let Canvas = {
         this.draw();
     },
 
-    mouseUp: function() {
+    mouseUp: function () {
         this.paint = false;
     },
 
-    mouseUpEvent: function(e) {
+    mouseUpEvent: function (e) {
         this.draw(e.pageX, e.pageY);
     },
 
-    mouseMoveEvent: function(e){
-        if (this.paint === true){
+    mouseMoveEvent: function (e) {
+        if (this.paint === true) {
             this.storeMouseClick(e.pageX - this.canvas.offsetLeft, e.pageY - this.canvas.offsetTop, true);
             this.draw();
         }
     },
 
-    // la fonction du bouton Effacer du panneau du canvas
-    clearCanvasButton: function (){
+    // les fonctions qui gèrent les différentes intéractions tactiles sur le canvas
+    touchStart: function (e) {
+        e.preventDefault();
+        var touch = e.touches[0];
+        var touchpos = this.getTouchPos(this.canvas,touch);
+        this.mouseDown(touch);
+    },
+
+    touchMove: function (e) {
+        e.preventDefault();
+        var touch = e.touches[0];
+        var touchpos = this.getTouchPos(this.canvas,touch);
+        this.mouseMoveEvent(touch);
+    },
+
+    touchEnd: function (e) {
+        e.preventDefault();
+        var mouseEvent = new MouseEvent("mouseup", {});
+        this.canvas.dispatchEvent(mouseEvent);
+    },
+
+    // la fonction pour effacer le canvas avec le bouton effacer
+    clearCanvasButton: function () {
         this.clearDraw();
     },
 
@@ -74,13 +106,18 @@ let Canvas = {
         this.clickDrag.push(dragging);
     },
 
+    // la fonction qui obtient la position du tactile
+    getTouchPos: function (canvasDom, touchEvent) {
+        var rect = canvasDom.getBoundingClientRect();
+            return {
+                clientX: touchEvent.clientX - rect.left,
+                clientY: touchEvent.clientY - rect.top
+        };
+    },
+
     // la fonction qui permet de 'dessiner' sur le canvas
     draw: function (mouseX, mouseY) {
         this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
-        this.context.strokeStyle = "#000";
-        this.context.lineJoin = "round";
-        this.context.lineWidth = 5;
-
         for (var i = 0; i < this.clickX.length; i++) {
             this.context.beginPath();
             if (this.clickDrag[i] && i) {
@@ -100,5 +137,5 @@ let Canvas = {
         this.clickX = [];
         this.clickY = [];
         this.clickDrag = [];
-    }
-};
+    },
+}
