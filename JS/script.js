@@ -136,23 +136,19 @@ let stationMap = {
                 if (!field.value) {
                     // on boucle sur les champs du formulaire. Si un ou plusieurs champs sont vides, on passe le boolean à true
                     hasError = true;
-                    $('.bookBtn').click(function () {
-                        $('#canvas').hide();
-                        $('.bookBtn').show();
-                    });
                 } else {
-                    $('.bookBtn').click(function () {
-                        $('.bookBtn').hide();
-                        $('#canvas').show();
-                    });
-                    // on stocke les nom et prénom qui sont renseignés
-                    localStorage.setItem(field.name, field.value);
+                    localStorage.setItem(field.name,field.value);
                 }
             });
-
+        
             // en dehors de la boucle et à la fin de la fonction, si hasError est true on affiche l'alert.
             if (hasError) {
                 alert("Veuillez saisir vos nom et/ou prénom !");
+                $('#canvas').hide();
+                $('.bookBtn').show();
+            }else {
+                $('bookBtn').hide();
+                $('#canvas').show();
             }
         });
     }
